@@ -1,0 +1,1 @@
+The simplest game possible.

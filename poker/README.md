@@ -1,0 +1,1 @@
+Incorporates GAN to learn from machine opponents.

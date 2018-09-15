@@ -2,12 +2,11 @@
   (:gen-class))
 
 (use 'clojure.string)
+(use 'russian.gun)
 
 (defn prompt []
   (println "Shoot? [y/N] "))
 
-(defn load [shots]
-  (rand-int (Integer/parseInt shots)))
 
 (defn take-turn [current loaded]
   (prompt)
@@ -21,9 +20,11 @@
           :else
           (do (println "Chicken! Game endend.")))))
 
+
 (defn play [shots]
   (let [loaded (load shots)]
     (take-turn 0 loaded)))
+
 
 (defn -main
   "I don't do a whole lot ... yet."

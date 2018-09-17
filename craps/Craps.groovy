@@ -24,7 +24,7 @@ class Controller {
     while (exp = System.console().readLine()) {
       view.show_pre_action()
       model.eval(exp)
-      view.show_processing_action()
+      view.show_proccessing_action()
       view.show_post_action()
       if (model.getShouldEnd()) { break }
       display()

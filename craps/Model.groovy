@@ -1,14 +1,16 @@
 class Model {
-  def dice, shouldEnd, result
+  def dice, shouldEnd, result, current
   def final Integer FACES = 6
 
   Model(Object... args) {
     dice = [new Die(FACES), new Die(FACES)]
     shouldEnd = false
+    current = 1
   }
 
   def eval(String exp) {
     if (exp =~ '\\s*[Yy]\\s*') {
+      current++
       result = shoot() as String
     } else {
       result = "Ok! Game ended."
@@ -25,7 +27,7 @@ class Model {
   }
 
   def getProcessingAction() {
-    shooting ? "Rolling..." : ""
+    "Rolling..."
   }
 
   def getPostAction() {

@@ -6,11 +6,11 @@ class View {
   }
 
   def show_prompt() {
-    print "Shoot? [y/N] "
+    print "Roll? [y/N] "
   }
 
   def show_state() {
-    println "Chamber $model.current of $model.chambers"
+    println "Roll: $model.current"
   }
 
   def show_pre_action() {
@@ -19,7 +19,7 @@ class View {
     }
   }
 
-  def show_proccessing_action() {
+  def show_processing_action() {
     if (model.getProcessingAction()) {
       println "$model.processingAction"
     }

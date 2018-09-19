@@ -18,6 +18,7 @@ class Controller {
     model = new Model(init_objects)
     view = new View(model)
 
+    view.show_preamble()
     display()
 
     def exp

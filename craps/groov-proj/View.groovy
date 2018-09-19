@@ -5,6 +5,11 @@ class View {
     this.model = model
   }
 
+  def show_preamble() {
+    println "Welcome to Craps!"
+    println ""
+  }
+
   def show_prompt() {
     print "Roll? [y/N] "
   }
@@ -21,11 +26,12 @@ class View {
 
   def show_processing_action() {
     if (model.getProcessingAction()) {
-      println "$model.processingAction"
+      print "$model.processingAction"
     }
   }
 
   def show_post_action() {
     println "$model.postAction"
+    println ""
   }
 }

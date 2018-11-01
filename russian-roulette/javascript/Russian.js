@@ -4,10 +4,16 @@ const Game = require('./Game');
 const game = new Game(new Gun(6));
 
 const replServer = repl.start({
-    prompt: game.getPrompt() + " > ",
+    prompt: game.getPrompt() + " ",
 
     eval: function(cmd, context, filename, callback) {
-        callback(null, cmd)
+        if (cmd.length > 0 && cmd[0] == 'n') {
+            console.log("Chicken!");
+            process.exit();
+        } else {
+            callback(null, cmd.trim());
+        }
+
     }
 })
 

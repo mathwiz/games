@@ -26,4 +26,4 @@ function Gun(shots) {
     }
 }
 
-module.exports.Gun = Gun;
+module.exports = Gun;

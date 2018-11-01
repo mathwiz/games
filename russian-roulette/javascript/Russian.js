@@ -1,22 +1,15 @@
+const repl = require('repl');
 const Gun = require('./Gun');
-const g = new Gun(6);
+const Game = require('./Game');
+const game = new Game(new Gun(6));
 
-console.log(g.isOut())
-console.log(g.getChambers())
-console.log(g.getLoaded())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
-console.log(g.shoot())
-console.log(g.getCurrent())
+const replServer = repl.start({
+    prompt: game.getPrompt() + " > ",
 
+    eval: function(cmd, context, filename, callback) {
+        callback(null, cmd)
+    }
+})
+
+
+replServer.context.n = function () { console.log("Chicken!") };

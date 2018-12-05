@@ -17,7 +17,7 @@
                 (do (println "Whew! No bullet!")
                     (recur (inc current) loaded))))
           :else
-          (do (println "Chicken! Game endend.")))))
+          (do (println "Chicken! Game ended.")))))
 
 
 (defn play [shots]

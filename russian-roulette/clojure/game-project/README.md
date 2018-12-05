@@ -1,6 +1,6 @@
 # russian
 
-FIXME: description
+Play Russian Roulette
 
 ## Installation
 
@@ -8,9 +8,8 @@ Download from http://example.com/FIXME.
 
 ## Usage
 
-FIXME: explanation
 
-    $ java -jar russian-0.1.0-standalone.jar [args]
+    $ lein run [shots]
 
 ## Options
 

@@ -1,6 +1,6 @@
 (ns russian.gun)
 
-(defn load [shots]
+(defn load-gun [shots]
   (rand-int (Integer/parseInt shots)))
 
 

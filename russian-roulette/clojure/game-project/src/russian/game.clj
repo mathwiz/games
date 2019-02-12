@@ -21,6 +21,6 @@
 
 
 (defn play [shots]
-  (let [loaded (load shots)]
+  (let [loaded (load-gun shots)]
     (take-turn 0 loaded)))
 

@@ -26,3 +26,9 @@
            (is (= (row-num 1) 1))
            (is (= (row-num 2) 2))
            (is (= (row-num 5) 3))))
+
+
+(deftest connect-test
+  (testing "Test connect."
+           (is (= (connect {} 15 1 2 4) '{1 {:connections {4 2}} 4 {:connections {1 2}}}))
+           (is (= (connect {} 10 3 5 9) '{3 {:connections {9 5}} 9 {:connections {3 5}}}))))

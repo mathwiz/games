@@ -31,3 +31,7 @@
   (inc (count (take-while #(> pos %) tri))))
 
 
+(defn connect
+  "Form a mutual connection between two positions."
+  [board max-pos pos neighbor destination]
+  {})

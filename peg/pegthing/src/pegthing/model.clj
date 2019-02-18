@@ -12,3 +12,9 @@
 
 (def tri (tri*))
 
+
+(defn triangular?
+  "Is the number triangular?"
+  [n]
+  (= n (last (take-while #(>= n %) tri))))
+

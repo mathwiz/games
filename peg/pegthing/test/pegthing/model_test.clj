@@ -20,3 +20,9 @@
            (is (= (row-tri 2) 3))
            (is (= (row-tri 3) 6))))
 
+
+(deftest row-num-test
+  (testing "Test row-num."
+           (is (= (row-num 1) 1))
+           (is (= (row-num 2) 2))
+           (is (= (row-num 5) 3))))

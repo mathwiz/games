@@ -25,3 +25,9 @@
   (last (take n tri)))
 
 
+(defn row-num
+  "Return row number that the position belongs to."
+  [pos]
+  (inc (count (take-while #(> pos %) tri))))
+
+

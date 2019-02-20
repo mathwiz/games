@@ -32,3 +32,14 @@
   (testing "Test connect."
            (is (= (connect {} 15 1 2 4) '{1 {:connections {4 2}} 4 {:connections {1 2}}}))
            (is (= (connect {} 10 3 5 9) '{3 {:connections {9 5}} 9 {:connections {3 5}}}))))
+
+
+(deftest connection-making-test
+  (testing "Test making connections."
+           (is
+             (= (connect-right {} 15 8) '{8 {:connections {10 9}} 10 {:connections {8 9}}}))
+           (is
+             (= (connect-down-left {} 15 1) '{1 {:connections {4 2}} 4 {:connections {1 2}}}))
+           (is
+             (= (connect-down-right {} 15 3) '{3 {:connections {10 6}} 10 {:connections {3 6}}}))))
+

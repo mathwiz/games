@@ -43,6 +43,7 @@
            (is
             (= (connect-down-right {} 15 3) '{3 {:connections {10 6}} 10 {:connections {3 6}}}))))
 
+
 (deftest add-pos-test
   (testing "Test adding a position to board"
            (is
@@ -50,4 +51,16 @@
                 '{1 {:connections {6 3, 4 2}, :pegged true}
                   4 {:connections {1 2}}
                   6 {:connections {1 3}}}))))
+
+
+(deftest new-board-test
+  (testing "Test creating a board"
+           (is
+            (= (new-board 3)
+               '{1 {:connections {6 3, 4 2}, :pegged true}
+                 2 {:connections {}, :pegged true}
+                 3 {:connections {}, :pegged true}
+                 4 {:connections {1 2, 6 5}, :pegged true}
+                 5 {:connections {}, :pegged true}
+                 6 {:connections {1 3, 4 5}, :pegged true}}))))
 

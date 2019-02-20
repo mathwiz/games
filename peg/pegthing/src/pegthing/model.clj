@@ -76,3 +76,10 @@
      pegged-board
      [connect-right connect-down-left connect-down-right])))
 
+
+(defn new-board
+  "Creates a new board with the given number of rows"
+  [rows]
+  {})
+
+

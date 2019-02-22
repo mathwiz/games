@@ -65,9 +65,7 @@
 
 (deftest new-board-test
   (testing "Test creating a board"
-           (is
-            (= (new-board 3)
-               Board6))))
+           (is (= (new-board 3) Board6))))
 
 
 (deftest moving-pegs-test
@@ -82,4 +80,11 @@
              (is (pegged? (place-peg removed 5) 5))
              (is (pegged? moved 1))
              (is (not (pegged? moved 4))))))
+
+
+(deftest valid-moves-test
+  (testing "Test getting map of valid moves"
+           (let [initial  (new-board 5)
+                 removed  (remove-peg initial 4)]
+             (is (= (valid-moves removed 1) '{4 2})))))
 

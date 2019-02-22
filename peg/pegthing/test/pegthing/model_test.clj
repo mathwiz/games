@@ -57,10 +57,11 @@
   (testing "Test creating a board"
            (is
             (= (new-board 3)
-               '{1 {:connections {6 3, 4 2}, :pegged true}
-                 2 {:connections {}, :pegged true}
-                 3 {:connections {}, :pegged true}
-                 4 {:connections {1 2, 6 5}, :pegged true}
-                 5 {:connections {}, :pegged true}
-                 6 {:connections {1 3, 4 5}, :pegged true}}))))
+               '{:rows 3,
+                 1 {:pegged true, :connections {6 3, 4 2}}
+                 2 {:pegged true}
+                 3 {:pegged true}
+                 4 {:pegged true, :connections {1 2, 6 5}}
+                 5 {:pegged true}
+                 6 {:pegged true, :connections {1 3, 4 5}}}))))
 

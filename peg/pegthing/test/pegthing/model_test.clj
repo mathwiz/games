@@ -3,6 +3,16 @@
             [pegthing.model :refer :all]))
 
 
+(def Board6
+  {:rows 3,
+   1     {:pegged true, :connections {6 3, 4 2}}
+   2     {:pegged true}
+   3     {:pegged true}
+   4     {:pegged true, :connections {1 2, 6 5}}
+   5     {:pegged true}
+   6     {:pegged true, :connections {1 3, 4 5}}})
+
+
 (deftest tri-test
   (testing "Triangular numbers."
            (is (= (take 1 tri) '(1)))
@@ -47,21 +57,20 @@
 (deftest add-pos-test
   (testing "Test adding a position to board"
            (is
-             (= (add-pos {} 15 1)
-                '{1 {:connections {6 3, 4 2}, :pegged true}
-                  4 {:connections {1 2}}
-                  6 {:connections {1 3}}}))))
+            (= (add-pos {} 15 1)
+               '{1 {:connections {6 3, 4 2}, :pegged true}
+                 4 {:connections {1 2}}
+                 6 {:connections {1 3}}}))))
 
 
 (deftest new-board-test
   (testing "Test creating a board"
            (is
             (= (new-board 3)
-               '{:rows 3,
-                 1 {:pegged true, :connections {6 3, 4 2}}
-                 2 {:pegged true}
-                 3 {:pegged true}
-                 4 {:pegged true, :connections {1 2, 6 5}}
-                 5 {:pegged true}
-                 6 {:pegged true, :connections {1 3, 4 5}}}))))
+               Board6))))
 
+
+(deftest pegged?-test
+  (testing "Test check for peg"
+           (is
+            (pegged? Board6 5))))

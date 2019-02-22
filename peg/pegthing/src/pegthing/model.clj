@@ -87,3 +87,8 @@
             (range 1 (inc max-pos)))))
 
 
+(defn pegged?
+  "Does pos have a peg?"
+  [board pos]
+  (get-in board [pos :pegged]))
+

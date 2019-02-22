@@ -70,7 +70,16 @@
                Board6))))
 
 
-(deftest pegged?-test
-  (testing "Test check for peg"
-           (is
-            (pegged? Board6 5))))
+(deftest moving-pegs-test
+  (testing "Test moving pegs"
+           (let [initial  Board6
+                 removed  (remove-peg (remove-peg Board6 5) 1)]
+             (is
+              (pegged? initial 5))
+             (is
+              (not (pegged? removed 5)))
+             (is
+              (not (pegged? removed 1)))
+             (is
+              (pegged? (place-peg removed 5) 5)))))
+

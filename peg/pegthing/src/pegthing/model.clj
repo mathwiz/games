@@ -92,3 +92,16 @@
   [board pos]
   (get-in board [pos :pegged]))
 
+
+(defn remove-peg
+  "Take the peg at given pos out of board"
+  [board pos]
+  (assoc-in board [pos :pegged] false))
+
+
+(defn place-peg
+  "Put peg at given pos in board"
+  [board pos]
+  (assoc-in board [pos :pegged] true))
+
+

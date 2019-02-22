@@ -73,13 +73,13 @@
 (deftest moving-pegs-test
   (testing "Test moving pegs"
            (let [initial  Board6
-                 removed  (remove-peg (remove-peg Board6 5) 1)]
-             (is
-              (pegged? initial 5))
-             (is
-              (not (pegged? removed 5)))
-             (is
-              (not (pegged? removed 1)))
-             (is
-              (pegged? (place-peg removed 5) 5)))))
+                 removed  (remove-peg (remove-peg Board6 5) 1)
+                 moved    (move-peg removed 4 1)]
+             (is (pegged? initial 5))
+             (is (pegged? initial 2))
+             (is (not (pegged? removed 5)))
+             (is (not (pegged? removed 1)))
+             (is (pegged? (place-peg removed 5) 5))
+             (is (pegged? moved 1))
+             (is (not (pegged? moved 4))))))
 

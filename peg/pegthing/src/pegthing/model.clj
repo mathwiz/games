@@ -105,3 +105,9 @@
   (assoc-in board [pos :pegged] true))
 
 
+(defn move-peg
+  "Move peg from from p1 to p2"
+  [board p1 p2]
+  (place-peg (remove-peg board p1) p2))
+
+

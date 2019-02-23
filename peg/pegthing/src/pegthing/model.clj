@@ -123,5 +123,8 @@
           (get-in board [pos :connections]))))
 
 
-
+(defn valid-move?
+  "Return jumped position if p1 to p2 is valid, nil otherwise"
+  [board p1 p2]
+  (get (valid-moves board p1) p2))
 

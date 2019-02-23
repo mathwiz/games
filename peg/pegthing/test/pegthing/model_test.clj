@@ -91,3 +91,13 @@
              (is (= (valid-moves removed 7) '{}))
              (is (= (valid-moves removed 9) '{})))))
 
+
+(deftest valid-moves?-test
+  (testing "Test if move is valid"
+           (let [initial  (new-board 5)
+                 removed  (remove-peg (remove-peg initial 1) 6)]
+             (is (= (valid-move? removed 4 1) 2))
+             (is (= (valid-move? removed 15 6) 10))
+             (is (not (valid-move? removed 3 10)))
+             (is (not (valid-move? removed 15 13)))
+             (is (not (valid-move? initial 4 1))))))

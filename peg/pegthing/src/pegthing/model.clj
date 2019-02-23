@@ -115,6 +115,13 @@
   "Return a map of all valid moves for pos where the key is the
   destination and the value is the jumped position"
   [board pos]
-  {})
+  (into {}
+        (filter
+          (fn [[destination jumped]]
+            (and (not (pegged? board destination))
+                 (pegged? board jumped)))
+          (get-in board [pos :connections]))))
+
+
 
 

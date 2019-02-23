@@ -85,6 +85,8 @@
 (deftest valid-moves-test
   (testing "Test getting map of valid moves"
            (let [initial  (new-board 5)
-                 removed  (remove-peg initial 4)]
-             (is (= (valid-moves removed 1) '{4 2})))))
+                 removed  (remove-peg (remove-peg initial 1) 6)]
+             (is (= (valid-moves removed 4) '{1 2, 6 5}))
+             (is (= (valid-moves removed 7) '{}))
+             (is (= (valid-moves removed 9) '{})))))
 

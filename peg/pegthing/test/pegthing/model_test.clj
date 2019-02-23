@@ -108,3 +108,15 @@
            (let [b1 (remove-peg (new-board 5) 5)
                  b2 (remove-peg (place-peg (remove-peg b1 14) 5) 9)]
              (is (= (make-move b1 14 5) b2)))))
+
+
+(deftest can-move?-test
+  (testing "Test if game stop condition is reached. All pegged is false trivially."
+           (let [initial  Board6
+                 b1       (remove-peg (remove-peg (remove-peg initial 5) 1) 4)
+                 b2       (make-move b1 6 1)
+                 b3       (make-move b2 1 4)]
+             (is (not (can-move? initial)))
+             (is (can-move? b1))
+             (is (can-move? b2))
+             (is (not (can-move? b3))))))

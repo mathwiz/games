@@ -101,3 +101,10 @@
              (is (not (valid-move? removed 3 10)))
              (is (not (valid-move? removed 15 13)))
              (is (not (valid-move? initial 4 1))))))
+
+
+(deftest make-move-test
+  (testing "Test adding a position to board"
+           (let [b1 (remove-peg (new-board 5) 5)
+                 b2 (remove-peg (place-peg (remove-peg b1 14) 5) 9)]
+             (is (= (make-move b1 14 5) b2)))))

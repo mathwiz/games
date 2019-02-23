@@ -94,19 +94,19 @@
 
 
 (defn remove-peg
-  "Take the peg at given pos out of board"
+  "Take the peg at given pos out of board, returning board"
   [board pos]
   (assoc-in board [pos :pegged] false))
 
 
 (defn place-peg
-  "Put peg at given pos in board"
+  "Put peg at given pos in board, returning board"
   [board pos]
   (assoc-in board [pos :pegged] true))
 
 
 (defn move-peg
-  "Move peg from from p1 to p2"
+  "Move peg from from p1 to p2, returning board"
   [board p1 p2]
   (place-peg (remove-peg board p1) p2))
 
@@ -127,4 +127,11 @@
   "Return jumped position if p1 to p2 is valid, nil otherwise"
   [board p1 p2]
   (get (valid-moves board p1) p2))
+
+
+(defn make-move
+  "Move peg from p1 to p2, removing jumped peg"
+  [board p1 p2]
+  (if-let [jumped (valid-move? board p1 p2)]
+    (move-peg (remove-peg board jumped) p1 p2)))
 

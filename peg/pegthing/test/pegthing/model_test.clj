@@ -87,6 +87,7 @@
            (let [initial  (new-board 5)
                  removed  (remove-peg (remove-peg initial 1) 6)]
              (is (= (valid-moves removed 4) '{1 2, 6 5}))
+             (is (= (valid-moves removed 13) '{6 9}))
              (is (= (valid-moves removed 7) '{}))
              (is (= (valid-moves removed 9) '{})))))
 

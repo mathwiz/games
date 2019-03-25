@@ -139,5 +139,9 @@
 (defn can-move?
   "Do any of the pegged positions have valid moves"
   [board]
-  false)
+  (some (comp not-empty (partial valid-moves board))
+        (map first (filter #(get (second %) :pegged) board))))
+
+
+
 

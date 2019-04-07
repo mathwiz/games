@@ -1,17 +1,25 @@
 (defun load-gun (shots) 
   (1+ (random shots)))
 
-(defun prompt ()
-  (print "Shoot? [Y/n]")
+(defun prompt (n)
+  (print (concatenate 'string "Shot " (write-to-string n) ". Shoot? [Y/n]"))
+  nil)
+
+(defun mock ()
+  (print "Chicken!")
+  nil)
+
+(defun kill ()
+  (print "Bang! You're dead!")
   nil)
 
 (defun take-turn (current chamber)
-  (prompt)
+  (prompt current)
   (let ((answer (read)))
     (if (equal 'n answer)
-        (print "Chicken!")
+        (mock)
         (if (equal current chamber)
-            (print "Bang! You're dead!")
+            (kill)
             (take-turn (1+ current) chamber)))))
 
 (defun play (shots)

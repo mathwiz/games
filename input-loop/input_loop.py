@@ -1,4 +1,4 @@
-def input_loop(prompt, validator):
+def input_loop(prompt, validator = lambda x : True):
     input = raw_input(prompt)
     if validator(input):
         return input

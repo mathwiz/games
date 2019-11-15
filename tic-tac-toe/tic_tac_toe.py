@@ -34,15 +34,6 @@ class Board:
     def __init__(self):
         self.board = ["board", 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-
-    def __str__(self):
-        return \
-            row_repr(self.board[1], self.board[2], self.board[3]) + '\n' + \
-            "-----------" + "\n" + \
-            row_repr(self.board[4], self.board[5], self.board[6]) + '\n' + \
-            "-----------" + "\n" + \
-            row_repr(self.board[7], self.board[8], self.board[9]) + '\n' + \
-            "-----------" + "\n"
             
     def move_x(self, pos):
         self.board[pos] = 10
@@ -55,7 +46,32 @@ class Board:
     def space_available(self, pos):
         return self.board[pos] == 0
             
+    
+    def sum_triplet(self, trip):
+        b = self.board
+        return b[trip[0]] + b[trip[1]] + b[trip[2]]
         
-    
-    
-    
+        
+    def compute_sums(self):
+        return [self.sum_triplet(t) for t in TRIPLETS]
+
+
+    def __str__(self):
+        return \
+            row_repr(self.board[1], self.board[2], self.board[3]) + '\n' + \
+            "-----------" + "\n" + \
+            row_repr(self.board[4], self.board[5], self.board[6]) + '\n' + \
+            "-----------" + "\n" + \
+            row_repr(self.board[7], self.board[8], self.board[9]) + '\n'
+
+
+
+# Constants
+COMPUTER = 10
+OPPONENT = 1
+CORNERS = [1, 3, 7, 9]
+SIDES = [2, 4, 6, 8]
+TRIPLETS = [ [1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+
+# State       
+B = Board()

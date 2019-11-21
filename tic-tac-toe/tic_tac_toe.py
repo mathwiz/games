@@ -54,6 +54,12 @@ class Board:
         
     def compute_sums(self):
         return [self.sum_triplet(t) for t in TRIPLETS]
+        
+        
+    def is_win(self):
+        comp_win = 3 * COMPUTER
+        opp_win = 3 * OPPONENT
+        return any([s==comp_win or s==opp_win for s in self.compute_sums()])
 
 
     def __str__(self):

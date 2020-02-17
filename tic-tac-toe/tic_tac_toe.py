@@ -24,6 +24,18 @@ def row_repr(x, y, z):
 def play():
     pass
     
+    
+def y_or_n(prompt):
+    response = raw_input(prompt + " (y/n) ")
+    if len(response) == 0:
+        return y_or_n("Please answer with y or n")
+    elif response[0:1] == "y":
+        return True
+    elif response[0:1] == "n":
+        return False
+    else:
+        return y_or_n("Please answer with y or n")
+            
 
 def read_a_legal_move(board):
     response = raw_input("Your move: ")

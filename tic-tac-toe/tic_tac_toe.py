@@ -21,8 +21,18 @@ def row_repr(x, y, z):
         " %s | %s | %s " % (convert_to_letter(x), convert_to_letter(y), convert_to_letter(z))
         
         
-def play():
-    pass
+def play(board):
+    first = choose_side()
+    if first:
+        move = read_a_legal_move(board)
+    else:
+        print("Computer move to come")
+
+    print("Move is " + str(move))
+
+
+def choose_side():
+    return y_or_n("Do you want to go first?")
     
     
 def y_or_n(prompt):
@@ -39,6 +49,7 @@ def y_or_n(prompt):
 
 def read_a_legal_move(board):
     response = raw_input("Your move: ")
+    return response
 
 
 class Board:
@@ -93,3 +104,7 @@ TRIPLETS = [ [1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5
 
 # State       
 B = Board()
+
+
+# Run 
+play(B)

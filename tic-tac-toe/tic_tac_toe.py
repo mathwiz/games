@@ -25,10 +25,14 @@ def play(board):
     first = choose_side()
     if first:
         move = read_a_legal_move(board)
+        board.move_x(move)
     else:
+        move = None
         print("Computer move to come")
 
+    print("")
     print("Move is " + str(move))
+    print(board)
 
 
 def choose_side():
@@ -48,8 +52,13 @@ def y_or_n(prompt):
             
 
 def read_a_legal_move(board):
-    response = input("Your move: ")
-    return response
+    response = int(input("Your move: "))
+    if response < 1 or response > 9:
+        print("Please enter a number between 1 and 9")
+        return read_a_legal_move(board)
+    else:
+        #TODO check that board position is available
+        return response 
 
 
 class Board:

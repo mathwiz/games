@@ -1,3 +1,6 @@
+import random
+
+
 # Board representation
 # 1 | 2 | 3
 # 4 | 5 | 6
@@ -8,9 +11,9 @@
 
     
 def convert_to_letter(val):
-    if val == 10:
+    if val == OPPONENT:
         return "X"
-    elif val == 1:
+    elif val == COMPUTER:
         return "O"
     else:
         return " "
@@ -24,17 +27,64 @@ def row_repr(x, y, z):
 def play(board):
     first = choose_side()
     if first:
-        move = read_a_legal_move(board)
-        board.move_x(move)
+        player_move(board)
     else:
-        move = None
-        print("Computer move to come")
-
+        computer_move(board)
+    
+    
+def show_position(board):
     print("")
-    print("Move is " + str(move))
     print(board)
 
 
+def make_move(player, pos, board):
+    if player == COMPUTER:
+        board.move_o(pos)
+    else:
+        board.move_x(pos)
+
+
+def is_game_over(board):
+    if board.is_win():
+        print('{} wins!'.format(board.winner()))
+        return True
+    elif board.filled():
+        print('Tie game!')
+        return True
+    return False
+
+
+def player_move(board):
+    move = read_a_legal_move(board)
+    make_move(OPPONENT, move, board)
+    show_position(board)
+    if not is_game_over(board):
+        return computer_move(board)
+    
+    
+def computer_move(board):
+    move = choose_best_move(board)
+    print("Move is {}".format(move))
+    make_move(COMPUTER, move, board)
+    show_position(board)
+    if not is_game_over(board):
+        return player_move(board)
+    
+
+def choose_best_move(board):
+    return \
+        random_empty_space(board)
+        
+        
+def random_empty_space(board):
+    indexes = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    random.shuffle(indexes)
+    for i in indexes:
+        if board.space_available(i):
+            return i
+    return None
+    
+    
 def choose_side():
     return y_or_n("Do you want to go first?")
     
@@ -56,8 +106,10 @@ def read_a_legal_move(board):
     if response < 1 or response > 9:
         print("Please enter a number between 1 and 9")
         return read_a_legal_move(board)
+    elif not board.space_available(response):
+        print('{d} is occupied. Please choose again.'.format(response))
+        return read_a_legal_move(board)
     else:
-        #TODO check that board position is available
         return response 
 
 
@@ -66,13 +118,13 @@ class Board:
     def __init__(self):
         self.board = ["board", 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-            
+
     def move_x(self, pos):
-        self.board[pos] = 10
+        self.board[pos] = OPPONENT
 
             
     def move_o(self, pos):
-        self.board[pos] = 1
+        self.board[pos] = COMPUTER
         
     
     def space_available(self, pos):
@@ -87,12 +139,37 @@ class Board:
     def compute_sums(self):
         return [self.sum_triplet(t) for t in TRIPLETS]
         
+    
+    def game_over(self):
+        return self.is_win() or self.filled()
+
+
+    def filled(self):
+        return not (0 in self.board[1:])
+        
+        
+    def is_x_win(self):
+        win = 3 * OPPONENT
+        return any([s==win for s in self.compute_sums()])
+        
+        
+    def is_o_win(self):
+        win = 3 * COMPUTER
+        return any([s==win for s in self.compute_sums()])
+        
         
     def is_win(self):
-        comp_win = 3 * COMPUTER
-        opp_win = 3 * OPPONENT
-        return any([s==comp_win or s==opp_win for s in self.compute_sums()])
-
+        return self.is_x_win() or self.is_o_win()
+        
+        
+    def winner(self):
+        if self.is_x_win():
+            return "X"
+        elif self.is_o_win():
+            return "O"
+        else:
+            return None
+            
 
     def __str__(self):
         return \

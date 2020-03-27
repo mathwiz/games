@@ -107,7 +107,7 @@ def read_a_legal_move(board):
         print("Please enter a number between 1 and 9")
         return read_a_legal_move(board)
     elif not board.space_available(response):
-        print('{d} is occupied. Please choose again.'.format(response))
+        print('{} is occupied. Please choose again.'.format(response))
         return read_a_legal_move(board)
     else:
         return response 

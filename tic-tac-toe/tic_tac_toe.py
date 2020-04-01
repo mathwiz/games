@@ -75,8 +75,20 @@ def choose_best_move(board):
     return \
         make_three_in_row(board) or \
         block_opponent_win(board) or \
+        block_squeeze_play(board) or \
         random_empty_space(board)
         
+        
+def block_squeeze_play(board):
+    return board.find_empty_position(find_squeeze_play(board))
+
+
+def find_squeeze_play(board):
+    if board.on_space(COMPUTER, 5) and board.on_diagonal(OPPONENT):
+        return SIDES
+    else:
+        return []
+    
         
 def make_three_in_row(board):
     return win_or_block(board, 2 * COMPUTER)
@@ -146,6 +158,15 @@ class Board:
     
     def space_available(self, pos):
         return self.board[pos] == 0
+    
+    
+    def on_space(self, player, pos):
+        return self.board[pos] == player
+    
+    
+    def on_diagonal(self, player):
+        return (self.board[1] == player and self.board[9] == player) \
+            or (self.board[3] == player and self.board[7] == player) 
             
     
     def sum_triplet(self, trip):

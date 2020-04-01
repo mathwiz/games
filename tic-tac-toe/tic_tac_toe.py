@@ -74,11 +74,16 @@ def computer_move(board):
 def choose_best_move(board):
     return \
         make_three_in_row(board) or \
+        block_opponent_win(board) or \
         random_empty_space(board)
         
         
 def make_three_in_row(board):
     return win_or_block(board, 2 * COMPUTER)
+    
+
+def block_opponent_win(board):
+    return win_or_block(board, 2 * OPPONENT)
     
 
 def win_or_block(board, target):
@@ -182,7 +187,7 @@ class Board:
         
                     
     def winning_move(self, player):
-        win = 2 * COMPUTER
+        win = 2 * player
         return any([s==win for s in self.compute_sums()])
         
         

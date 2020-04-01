@@ -76,9 +76,14 @@ def choose_best_move(board):
         make_three_in_row(board) or \
         block_opponent_win(board) or \
         block_squeeze_play(board) or \
+        favor_center(board) or \
         random_empty_space(board)
         
         
+def favor_center(board):
+    return board.find_empty_position([5])
+    
+    
 def block_squeeze_play(board):
     return board.find_empty_position(find_squeeze_play(board))
 

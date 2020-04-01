@@ -73,9 +73,21 @@ def computer_move(board):
 
 def choose_best_move(board):
     return \
+        make_three_in_row(board) or \
         random_empty_space(board)
         
         
+def make_three_in_row(board):
+    return win_or_block(board, 2 * COMPUTER)
+    
+
+def win_or_block(board, target):
+    for t in TRIPLETS:
+        if board.sum_triplet(t) == target:
+            return board.find_empty_position(t)
+    return None
+        
+
 def random_empty_space(board):
     indexes = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     random.shuffle(indexes)
@@ -160,6 +172,18 @@ class Board:
         
     def is_win(self):
         return self.is_x_win() or self.is_o_win()
+        
+        
+    def find_empty_position(self, squares):
+        for pos in squares:
+            if self.space_available(pos):
+                return pos
+        return None
+        
+                    
+    def winning_move(self, player):
+        win = 2 * COMPUTER
+        return any([s==win for s in self.compute_sums()])
         
         
     def winner(self):

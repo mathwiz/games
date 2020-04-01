@@ -64,7 +64,7 @@ def player_move(board):
     
 def computer_move(board):
     move = choose_best_move(board)
-    print("Move is {}".format(move))
+    print("Computer move is {}".format(move))
     make_move(COMPUTER, move, board)
     show_position(board)
     if not is_game_over(board):

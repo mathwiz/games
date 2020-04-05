@@ -1,22 +1,26 @@
-(defvar b)
-(setf b (make-board))
-
 
 (defun make-board ()
-  (list 'board 0 0 0 0 0 0 0 0 0))
+  (list 'board 10 0 0 0 10 10 1 1 10))
 
 
 (defun convert-to-letter (val)
-  (cond ((equal val 10) "p")
-	((equal val 1) "P")
+  (cond ((equal val 10) "x")
+	((equal val 1) "o")
 	(t " ")))
 
 
-(defun print-row (x y z)
-  (format t "~& ~A | ~A | ~A"
-	  (convert-to-letter x)
-	  (convert-to-letter y)
-	  (convert-to-letter z)))
+(defun print-square (x)
+  (format t " ~A " (convert-to-letter x)))
+
+
+(defun print-row (lst)
+  (format t "~%")
+  (dotimes (n 8)
+    (progn
+      (print-square (nth n lst))
+      (format t "~A" (if (not (= n 7))
+                         "|"
+                         " ")))))
 
 
 (defun print-board (board)

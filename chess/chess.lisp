@@ -4,3 +4,7 @@
 (load "strategy.lisp")
 
 
+(defvar b)
+(setf b (make-board))
+
+

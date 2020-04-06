@@ -1,6 +1,15 @@
 
 (defun make-board ()
-  (list 'board 10 0 0 0 10 10 1 1 10))
+  (list 
+   '(1 0 0 0 10 10 1 1 10)
+   '(10 0 0 0 10 10 1 1 10)
+   '(1 0 0 0 10 10 1 1 10)
+   '(10 0 0 0 10 10 1 1 10)
+   '(1 0 0 0 10 10 1 1 10)
+   '(10 0 0 0 10 10 1 1 10)
+   '(1 0 0 0 10 10 1 1 10)
+   '(10 0 0 0 10 10 1 1 10)
+   ))
 
 
 (defun convert-to-letter (val)
@@ -23,15 +32,17 @@
                          " ")))))
 
 
+(defun print-spacer ()
+  (format t "~%")
+  (dotimes (n 8)
+    (progn
+      (format t "~A" "____"))))
+
+
 (defun print-board (board)
   (format t "~%")
-  (print-row
-   (nth 1 board) (nth 2 board) (nth 3 board))
-  (format t "~&-----------")
-  (print-row
-   (nth 4 board) (nth 5 board) (nth 6 board))
-  (format t "~&-----------")
-  (print-row
-   (nth 7 board) (nth 8 board) (nth 9 board))
-  (format t "~&~&")
-  )
+  (dotimes (n 8)
+    (progn
+      (print-row (nth (- 7 n) board))
+      (if (< n 7) (print-spacer))))
+  (format t "~&~&"))

@@ -1,5 +1,24 @@
+(defparameter *board* (make-hash-table))
 
-(defun make-board ()
+;; 64 bits
+;; 1111111111111111111111111111111111111111111111111111111111111111
+;; = 18446744073709551615
+;; 0000000000000000000000000000000000000000000000000000000000000000
+(defun starting-position (board)
+  (setf (gethash 'white-pawns board) 65280)
+  (setf (gethash 'white-rooks board) 129)
+  (setf (gethash 'white-pawns board) nil)
+  (setf (gethash 'white-pawns board) nil)
+  (setf (gethash 'white-queen board) nil)
+  (setf (gethash 'white-king board) nil)
+)
+
+
+(defun board-representation (board)
+  nil)
+
+
+(defun make-board-representation ()
   (list 
    '(4 2 3 5 6 3 2 4)
    '(1 1 1 1 1 1 1 1)
@@ -55,4 +74,5 @@
     (progn
       (print-row (nth (- 7 n) board))
       (if (< n 7) (print-spacer))))
-  (format t "~&~&"))
+  (format t "~&~&")
+  t)

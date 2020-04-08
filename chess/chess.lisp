@@ -5,6 +5,6 @@
 
 
 (defvar b)
-(setf b (make-board))
+(setf b (make-board-representation))
 
 

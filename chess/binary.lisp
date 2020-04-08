@@ -9,3 +9,7 @@
                                  acc))))))
     (recur bits 0)))
 
+
+(defun board->bits (board)
+  (reduce #'append (mapcar #'reverse board)))
+

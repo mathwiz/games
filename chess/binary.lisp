@@ -11,7 +11,7 @@
 
 
 (defun board->bits (board)
-  (reduce #'append (mapcar #'reverse board)))
+  (reduce #'append board))
 
 
 (defun int->bits (int)

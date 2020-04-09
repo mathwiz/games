@@ -23,9 +23,9 @@
                  1
                  0))
            (recur (index acc)
-             (cond ((= index 0) (pad (reverse acc)))
-                   (t (recur (1- index) (cons (get-bit (1- index)) acc))))))
-    (recur (integer-length int) nil)))
+             (cond ((< index 0) (pad (reverse acc)))
+                   (t (recur (1- index) (cons (get-bit index) acc))))))
+    (recur (1- (integer-length int)) nil)))
 
 
 (defun bits->board (bits)

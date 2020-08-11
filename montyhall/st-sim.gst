@@ -41,20 +41,28 @@ asString [
                       ifTrue: [ '*' ]
                       ifFalse: [ '_' ] ].
 
-    ^format value: (self left), format value: (self right), format value: (self right)
+    ^(format value: self left), (format value: self center), (format value: self right)
 ]
 
 ] "Doors"
 
 
-| test |
+| test  format |
+
+    format := [ :x | x
+                      ifTrue: [ '*' ]
+                      ifFalse: [ '_' ] ].
+
+(format value: true) displayNl.
+(format value: false) displayNl.
 
 test := Doors new.
 test left displayNl.
 test center displayNl.
 test right displayNl.
+test asString displayNl.
 
 10 timesRepeat: 
              [ test := Doors new. 
-               test asString displayNl. ].
+               '!' displayNl. ].
 

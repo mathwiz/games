@@ -1,6 +1,6 @@
 (setf *pos-min* 22)
 (setf *pos-max* 98)
-(setf *off-board* 100)
+(setf *off-board* 99)
 (setf *empty* 0)
 
 (setf *bk* -1)
@@ -27,4 +27,13 @@
 
 (defun init-pieces ()
   nil)
+
+
+(defun init-board ()
+  nil)
+
+
+(defun init ()
+  (progn (init-board)
+         (init-pieces)))
 

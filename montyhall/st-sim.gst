@@ -11,6 +11,14 @@ Doors class >> new [
     ^newDoors
 ]
 
+Doors class >> getAlternatives: doorNum [
+    | sampler |
+    doorNum = 1 ifTrue: [ sampler := SampleSpaceWithoutReplacement data: #(2 3) ].
+    doorNum = 2 ifTrue: [ sampler := SampleSpaceWithoutReplacement data: #(1 3) ].
+    doorNum = 3 ifTrue: [ sampler := SampleSpaceWithoutReplacement data: #(1 2) ].
+    ^sampler
+]
+
 left [
     ^left
 ]
@@ -35,6 +43,24 @@ right: aBool [
     right := aBool
 ]
 
+isWinner: doorNum [
+    doorNum = 1 ifTrue: [ ^left ].
+    doorNum = 2 ifTrue: [ ^center ].
+    doorNum = 3 ifTrue: [ ^right ].
+]
+
+offerDoor: currentChoice [
+    | alternatives alt |
+    alternatives := self class getAlternatives: currentChoice.
+    alt := alternatives next.
+    (self isWinner: currentChoice)
+        ifTrue: [ ^alt ]
+        ifFalse: [ ^(self isWinner: alt)
+                        ifTrue: [ alternatives next ] 
+                        ifFalse: [ alt ]
+        ]
+]
+
 asString [
     | format |
     format := [ :x | x
@@ -47,22 +73,60 @@ asString [
 ] "Doors"
 
 
-| test  format |
+Object subclass: Chooser [
+| first switch |
 
-    format := [ :x | x
-                      ifTrue: [ '*' ]
-                      ifFalse: [ '_' ] ].
+Chooser class >> new [
+    ^self basicNew makeRandoms
+]
 
-(format value: true) displayNl.
-(format value: false) displayNl.
+firstChoice [
+    ^first
+]
 
+switchChoice [
+    ^switch
+]
+
+makeRandoms [
+    | doors |
+    doors := SampleSpaceWithoutReplacement data: #(1 2 3).
+    first := doors next.
+    switch := (SampleSpaceWithReplacement data: #(true false)) next.
+]
+
+] "Chooser"
+
+
+
+| test chooser data  |
+
+"
+data := '123456778'.
+test := String streamContents: [:s |
+    data do: [ :char |
+    s nextPut: char]].
+
+test displayNl.
+"
 test := Doors new.
 test left displayNl.
 test center displayNl.
 test right displayNl.
 test asString displayNl.
 
+chooser := Chooser new.
+
+'# trials of Doors' displayNl.
 10 timesRepeat: 
              [ test := Doors new. 
-               '!' displayNl. ].
+               test asString displayNl.
+               (test offerDoor: 1) displayNl ].
+
+'# trials of Chooser' displayNl.
+5 timesRepeat: 
+             [ chooser := Chooser new.
+               chooser firstChoice displayNl.
+             ].
+
 

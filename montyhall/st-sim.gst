@@ -211,8 +211,3 @@ test := Simulation newWithTrials: trials Switch: true.
 test run.
 ('There were ', test wins asString, ' wins with switch! ') displayNl.
 
-
-
-
-
-

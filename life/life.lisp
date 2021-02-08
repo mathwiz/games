@@ -1,15 +1,17 @@
-(defparameter *grid-size* 64)
-(defparameter *grid* nil)
+(defun life ()
+  (let ((_SIZE nil) 
+        (_GEN1 nil)
+        (_GEN2 nil))
+    (progn 
+      (init)
+      (main-loop))))
 
 
-(defun make-grid ()
-  (let ((grid (loop repeat *grid-size*
-                   collect (make-array *grid-size*))))
-    (setf *grid* grid)))
+(defun init ()
+  nil)
 
+(defun main-loop ()
+  (princ 'done))
 
-(defun seed-randomly (grid pct)
-  (labels ((fill ()
-             nil))
-    nil))
-
+;; Run it
+(life)

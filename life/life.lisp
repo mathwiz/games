@@ -42,28 +42,49 @@
 ;; NW  N  NE  |   0   1   2
 ;;  W  C  E   |   3   C   4
 ;; SW  S  SE  |   5   6   7
-(defun neighbor (cell dir size) 
-  (cond ((= dir  0) 
-           (if (left-end cell size) 0 (1- cell))) 
-          ((= dir  1) 
-           (if (left-end cell size) 0 (1- cell))) 
-          ((= dir  2) 
-           (if (left-end cell size) 0 (1- cell))) 
-          ((= dir  3) 
-           (if (left-end cell size) 
-               (+ cell offset) 
-               (1- cell))) 
-          ((= dir  4) 
-           (if (right-end cell size) 
-               (- cell offset) 
-               (1+ cell))) 
-          ((= dir  5) 
-           (if (left-end cell size) 0 (1- cell))) 
-          ((= dir  6) 
-           (if (left-end cell size) 0 (1- cell))) 
-          ((= dir  7) 
-           (if (left-end cell size) 0 (1- cell))) 
-          (t nil)))
+(defun neighbor (cell dir size)
+  (cond ((= dir  0)
+         (if (left-end cell size) 0 -1))
+        ((= dir  1)
+         (select-up cell size))
+        ((= dir  2)
+         (if (left-end cell size) 0 -1))
+        ((= dir  3)
+         (select-left cell size))
+        ((= dir  4)
+         (select-right cell size))
+        ((= dir  5)
+         (if (left-end cell size) 0 -1))
+        ((= dir  6)
+         (select-down cell size))
+        ((= dir  7)
+         (if (left-end cell size) 0 -1))
+        (t nil)))
+
+
+(defun select-up (cell size) 
+  (if (first-row cell size) 
+      (+ (* size (1- size)) 
+         (mod cell size)) 
+      (- cell size)))
+
+
+(defun select-down (cell size) 
+  (if (last-row cell size) 
+      (mod cell size) 
+      (+ cell size)))
+
+
+(defun select-left (cell size)
+  (if (left-end cell size)
+               (+ cell (1- size))
+               (1- cell)))
+
+
+(defun select-right (cell size)
+  (if (right-end cell size)
+               (- cell (1- size))
+               (1+ cell)))
 
 
 (defun left-end (cell size)
@@ -111,5 +132,17 @@
 
 
 ;; Run it
-(life)
+(print nil)
+(princ (get-neighbors 7 7))
+(princ (get-neighbors 10 7))
+(princ (get-neighbors 13 7))
+(print nil)
+(princ (get-neighbors 0 7))
+(princ (get-neighbors 3 7))
+(princ (get-neighbors 6 7))
+(print nil)
+(princ (get-neighbors 42 7))
+(princ (get-neighbors 45 7))
+(princ (get-neighbors 48 7))
 
+;(life)

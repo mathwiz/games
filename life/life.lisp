@@ -19,6 +19,12 @@
     (randomly-populate _GEN1)))
 
 
+(defun copy (from to)
+  (let ((length (length from)))
+    (dotimes (i length)
+      (set-cell i to (get-cell i from)))))
+
+
 (defun randomly-populate (grid)
   (let ((length (length grid)))
     (dotimes (i length)
@@ -31,21 +37,40 @@
            (cond ((equal cmd "t")
                   (progn (format t "get neighbors of cell> ")
                          (let ((cell (read)))
-                           (princ (get-neighbors cell _SIZE)))))
+                           (princ (get-neighbors cell _SIZE)))
+                         (main-loop)))
+                 ((equal cmd "t2")
+                  (progn (show _GEN1)
+                         (format t "calculate living neighbors of cell> ")
+                         (let ((cell (read)))
+                           (princ (live-neighbors cell _GEN1)))
+                         (main-loop)))
                  ((equal cmd "q")
                   (progn (format t "Bye.") nil))
                  ((equal cmd "")
-                  (progn (show-multiple 1 _GEN1)
+                  (progn (compute-multiple 1 _GEN1 _GEN2)
                          (main-loop)))
-                 (t (progn (show-multiple (parse-integer cmd) _GEN1)
+                 (t (progn (show-multiple (parse-integer cmd) _GEN1 _GEN2)
                            (main-loop)))))))
 
 
-(defun live-neigbors (cell size grid)
-  (let ((neighbors (get-neighbors (cell size)))
+(defun live-neigbors (cell grid)
+  (let* ((size (sqrt (length grid)))
+         (neighbors (get-neighbors (cell size)))
         (func (lamda (acc x) (+ (get-cell x grid) acc))))
     (reduce #'func neighbors :initial-value 0)))
 
+
+(defun to-live (cell grid)
+  (> (live-neighbors cell grid) 4))
+
+
+(defun alive-value ()
+  1)
+
+
+(defun dead-value ()
+  0)
 
 (defun get-cell (cell grid)
   (aref grid cell))
@@ -129,32 +154,37 @@
   (>= cell (* size (1- size))))
 
 
-(defun compute ()
-  (let ((n _SIZE)
-        (length (* _SIZE _SIZE)))
-    (dotimes (i length)
-      (compute-cell i n length))))
+(defun compute (grid dest-grid)
+  (let ((n (length grid)))
+    (dotimes (i n)
+      (set-cell i dest-grid (compute-cell i grid)))))
 
 
-(defun compute-cell (cell n length)
-  (princ cell))
+;; Just an alias to to-live
+(defun compute-cell (cell grid)
+  (to-live cell grid))
 
 
-(defun show-multiple (n grid)
-  (dotimes (i n)
-    (princ 'compute)
-         (compute))
+(defun compute-multiple (n grid dest-grid)
+  (let ((var1 nil) 
+        (var2 nil))
+    (dotimes (i n)
+      (format t "Computing iteration ~d~%" (1+ i))
+      (compute grid dest-grid)))
   (show grid))
 
 
 (defun show (grid)
   (progn
-    (let ((length (length grid)) 
+    (let ((length (length grid))
           (linesize (sqrt (length grid))))
+      (format t "~%   ")
+      (dotimes (i linesize)
+        (format t "~3d" (1+ i)))
       (dotimes (i length)
-        (progn 
+        (progn
           (if (= (mod i linesize) 0)
-              (format t "~%"))
+              (format t "~%~3d " (1+ (/ i linesize))))
           (show-cell (get-cell i grid)))))
     (format t "~%")))
 

@@ -35,7 +35,7 @@
   (progn (format t "~%Steps to advance (Q to quit) > ")
          (let ((cmd (read-line)))
            (cond ((equal cmd "t1")
-                  (progn (show _GEN1) 
+                  (progn (show _GEN1)
                          (format t "get neighbors of cell> ")
                          (let ((cell (read)))
                            (princ (map 'vector #'1+ (get-neighbors (1- cell) _SIZE))))
@@ -63,7 +63,9 @@
 
 
 (defun to-live (cell grid)
-  (> (live-neighbors cell grid) 4))
+  (let ((neighbors-alive (live-neighbors cell grid)))
+    (or (= neighbors-alive 2)
+        (= neighbors-alive 3))))
 
 
 (defun alive-value ()
@@ -161,18 +163,18 @@
       (set-cell i dest-grid (compute-cell i grid)))))
 
 
-;; Just an alias to to-live
 (defun compute-cell (cell grid)
-  (to-live cell grid))
+  (if (to-live cell grid)
+      (alive-value)
+      (dead-value)))
 
 
-(defun compute-multiple (n grid dest-grid)
-  (let ((var1 nil) 
-        (var2 nil))
-    (dotimes (i n)
-      (format t "Computing iteration ~d~%" (1+ i))
-      (compute grid dest-grid)))
-  (show grid))
+(defun compute-multiple (iterations grid dest-grid)
+  (progn
+    (dotimes (i iterations)
+      (compute grid dest-grid)
+      (copy dest-grid grid))
+    (show grid)))
 
 
 (defun show (grid)

@@ -228,7 +228,7 @@
 
 
 (defun get-symbol (state)
-  (if (= state 1)
+  (if (= state (alive-value))
       *LIVE*
       *DEAD*))
 

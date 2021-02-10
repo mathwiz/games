@@ -1,5 +1,5 @@
-(defparameter *LIVE* "*")
-(defparameter *DEAD* ".")
+(defparameter *LIVE* #\*)
+(defparameter *DEAD* #\.)
 
 (defun life ()
   (let ((_SIZE nil)
@@ -15,18 +15,44 @@
   (progn
     (setf _SIZE (read))
     (setf _GEN1 (make-array (* _SIZE _SIZE)))
-    (setf _GEN2 (make-array (* _SIZE _SIZE)))))
+    (setf _GEN2 (make-array (* _SIZE _SIZE)))
+    (randomly-populate _GEN1)))
+
+
+(defun randomly-populate (grid)
+  (let ((length (length grid)))
+    (dotimes (i length)
+      (set-cell i grid (random 2)))))
 
 
 (defun main-loop ()
-  (progn
-    (format t "~%Steps to advance (Q to quit) > ")
-    (let ((cmd (read-line)))
-     (cond
-       ((equal cmd "t") (progn (format t "cell> ") (let ((cell (read))) (princ (get-neighbors cell _SIZE)))))
-       ((equal cmd "q") (progn (format t "Bye.") nil))
-       ((equal cmd "") (progn (show-multiple 1) (main-loop)))
-       (t (progn (show-multiple (parse-integer cmd)) (main-loop)))))))
+  (progn (format t "~%Steps to advance (Q to quit) > ")
+         (let ((cmd (read-line)))
+           (cond ((equal cmd "t")
+                  (progn (format t "get neighbors of cell> ")
+                         (let ((cell (read)))
+                           (princ (get-neighbors cell _SIZE)))))
+                 ((equal cmd "q")
+                  (progn (format t "Bye.") nil))
+                 ((equal cmd "")
+                  (progn (show-multiple 1 _GEN1)
+                         (main-loop)))
+                 (t (progn (show-multiple (parse-integer cmd) _GEN1)
+                           (main-loop)))))))
+
+
+(defun live-neigbors (cell size grid)
+  (let ((neighbors (get-neighbors (cell size)))
+        (func (lamda (acc x) (+ (get-cell x grid) acc))))
+    (reduce #'func neighbors :initial-value 0)))
+
+
+(defun get-cell (cell grid)
+  (aref grid cell))
+
+
+(defun set-cell (cell grid val)
+  (setf (aref grid cell) val))
 
 
 (defun get-neighbors (cell size)
@@ -47,17 +73,17 @@
          (select-up (select-left cell size) size))
         ((= dir  1)
          (select-up cell size))
-        ((= dir  2) 
+        ((= dir  2)
          (select-up (select-right cell size) size))
         ((= dir  3)
          (select-left cell size))
         ((= dir  4)
          (select-right cell size))
-        ((= dir  5) 
+        ((= dir  5)
          (select-down (select-left cell size) size))
         ((= dir  6)
          (select-down cell size))
-        ((= dir  7) 
+        ((= dir  7)
          (select-down (select-right cell size) size))
         (t nil)))
 
@@ -114,35 +140,50 @@
   (princ cell))
 
 
-(defun show-multiple (n)
+(defun show-multiple (n grid)
   (dotimes (i n)
     (princ 'compute)
          (compute))
-  (show))
+  (show grid))
 
 
-(defun show ()
+(defun show (grid)
   (progn
-    (princ _GEN2)
+    (let ((length (length grid)) 
+          (linesize (sqrt (length grid))))
+      (dotimes (i length)
+        (progn 
+          (if (= (mod i linesize) 0)
+              (format t "~%"))
+          (show-cell (get-cell i grid)))))
     (format t "~%")))
 
 
 (defun show-cell (state)
-  (format t "~S " state))
+  (format t " ~C " (get-symbol state)))
 
 
-;; Run it
-(print nil)
-(princ (get-neighbors 7 7))
-(princ (get-neighbors 10 7))
-(princ (get-neighbors 13 7))
-(print nil)
-(princ (get-neighbors 0 7))
-(princ (get-neighbors 3 7))
-(princ (get-neighbors 6 7))
-(print nil)
-(princ (get-neighbors 42 7))
-(princ (get-neighbors 45 7))
-(princ (get-neighbors 48 7))
+(defun get-symbol (state)
+  (if (= state 1)
+      *LIVE*
+      *DEAD*))
 
-;(life)
+
+;;Run it
+
+(life)
+
+;; Test it
+
+;; (print nil)
+;; (princ (get-neighbors 7 7))
+;; (princ (get-neighbors 10 7))
+;; (princ (get-neighbors 13 7))
+;; (print nil)
+;; (princ (get-neighbors 0 7))
+;; (princ (get-neighbors 3 7))
+;; (princ (get-neighbors 6 7))
+;; (print nil)
+;; (princ (get-neighbors 42 7))
+;; (princ (get-neighbors 45 7))
+;; (princ (get-neighbors 48 7))

@@ -14,9 +14,8 @@
   (format t "Size of Life: ")
   (progn
     (setf _SIZE (read))
-    (setf _GEN1 (make-array (* _SIZE _SIZE)))
-    (setf _GEN2 (make-array (* _SIZE _SIZE)))
-    (randomly-populate _GEN1)))
+    (setf _GEN1 (make-array (* _SIZE _SIZE) :initial-element (dead-value)))
+    (setf _GEN2 (make-array (* _SIZE _SIZE)))))
 
 
 (defun copy (from to)
@@ -32,7 +31,7 @@
 
 
 (defun main-loop ()
-  (progn (format t "~%Steps to advance (Q to quit) > ")
+  (progn (format t "~%Steps to advance (<Spc> = 1, Q to quit) > ")
          (let ((cmd (read-line)))
            (cond ((equal cmd "t1")
                   (progn (show _GEN1)
@@ -46,13 +45,40 @@
                          (let ((cell (read)))
                            (princ (live-neighbors (1- cell) _GEN1)))
                          (main-loop)))
+                 ((equal cmd "s")
+                  (progn (show _GEN1)
+                         (main-loop)))
+                 ((equal cmd "r")
+                  (progn (randomly-populate _GEN1)
+                         (show _GEN1)
+                         (main-loop)))
+                 ((equal cmd "g")
+                  (progn (add-glider _GEN1)
+                         (show _GEN1)
+                         (main-loop)))
                  ((equal cmd "q")
                   (progn (format t "Bye.") nil))
                  ((equal cmd "")
                   (progn (compute-multiple 1 _GEN1 _GEN2)
+                         (show _GEN1)
                          (main-loop)))
                  (t (progn (compute-multiple (parse-integer cmd) _GEN1 _GEN2)
+                           (show _GEN1)
                            (main-loop)))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun add-glider (grid)
+  (format t "add glider at cell> ")
+  (let ((size (sqrt (length grid)))
+        (cell (read)))
+    (progn
+      (set-cell cell grid (alive-value))
+      (set-cell (select-right (select-down cell size) size) grid (alive-value))
+      (set-cell (select-right (select-right (select-down cell size) size) size) grid (alive-value))
+      (set-cell (select-down (select-down cell size) size) grid (alive-value))
+      (set-cell (select-right (select-down (select-down cell size) size) size) grid (alive-value)))))
 
 
 (defun live-neighbors (cell grid)
@@ -63,9 +89,15 @@
 
 
 (defun to-live (cell grid)
-  (let ((neighbors-alive (live-neighbors cell grid)))
-    (or (= neighbors-alive 2)
+  (let ((neighbors-alive (live-neighbors cell grid))) 
+    (if (is-alive cell grid) 
+        (or (= neighbors-alive 2) 
+            (= neighbors-alive 3)) 
         (= neighbors-alive 3))))
+
+
+(defun is-alive (cell grid)
+  (= (get-cell cell grid) (alive-value)))
 
 
 (defun alive-value ()
@@ -84,8 +116,7 @@
 
 
 (defun get-neighbors (cell size)
-  (let ((neighbors (make-array 8))
-        (var2 nil))
+  (let ((neighbors (make-array 8)))
     (progn
       (dotimes (i 8)
         (setf (aref neighbors i) (neighbor cell i size))))
@@ -173,8 +204,7 @@
   (progn
     (dotimes (i iterations)
       (compute grid dest-grid)
-      (copy dest-grid grid))
-    (show grid)))
+      (copy dest-grid grid))))
 
 
 (defun show (grid)

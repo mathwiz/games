@@ -19,8 +19,8 @@
 
 
 (defun copy (from to)
-  (let ((length (length from)))
-    (dotimes (i length)
+  (let ((n (length from)))
+    (dotimes (i n)
       (set-cell i to (get-cell i from)))))
 
 

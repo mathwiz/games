@@ -34,7 +34,7 @@
 
 (defun build-neighbors (grid)
   (let* ((n (length grid))
-         (size (sqrt n))) 
+         (size (sqrt n)))
     (dotimes (i n)
       (setf (gethash i *NEIGHBORS*) (get-neighbors i size)))))
 
@@ -95,11 +95,13 @@
       (set-cell (select-right (select-down (select-down cell size) size) size) grid (alive-value)))))
 
 
-(defun live-neighbors (cell grid)
-  (let* ((size (sqrt (length grid)))
-         (neighbors (lookup-neighbors cell))
-        (func (lambda (acc x) (+ (get-cell x grid) acc))))
-    (reduce func neighbors :initial-value 0)))
+(defun live-neighbors (cell grid) 
+  (let ((size (sqrt (length grid))) 
+        (neighbors (lookup-neighbors cell)) 
+        (func (lambda (acc x) 
+                (+ (get-cell x grid) acc)))) 
+    (reduce func neighbors 
+            :initial-value 0)))
 
 
 (defun to-live (cell grid)
@@ -119,6 +121,7 @@
 
 (defun dead-value ()
   0)
+
 
 (defun get-cell (cell grid)
   (aref grid cell))

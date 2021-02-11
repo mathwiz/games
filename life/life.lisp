@@ -1,5 +1,6 @@
 (defparameter *LIVE* #\*)
 (defparameter *DEAD* #\.)
+(defparameter *NEIGHBORS* (make-hash-table))
 
 (defun life ()
   (let ((_SIZE nil)
@@ -15,7 +16,8 @@
   (progn
     (setf _SIZE (read))
     (setf _GEN1 (make-array (* _SIZE _SIZE) :initial-element (dead-value)))
-    (setf _GEN2 (make-array (* _SIZE _SIZE)))))
+    (setf _GEN2 (make-array (* _SIZE _SIZE)))
+    (build-neighbors _GEN1)))
 
 
 (defun copy (from to)
@@ -30,6 +32,17 @@
       (set-cell i grid (random 2)))))
 
 
+(defun build-neighbors (grid)
+  (let* ((n (length grid))
+         (size (sqrt n))) 
+    (dotimes (i n)
+      (setf (gethash i *NEIGHBORS*) (get-neighbors i size)))))
+
+
+(defun lookup-neighbors (cell)
+  (gethash cell *NEIGHBORS*))
+
+
 (defun main-loop ()
   (progn (format t "~%Steps to advance (<Ret> = 1, Q to quit) > ")
          (let ((cmd (read-line)))
@@ -37,7 +50,7 @@
                   (progn (show _GEN1)
                          (format t "get neighbors of cell> ")
                          (let ((cell (read)))
-                           (princ (map 'vector #'1+ (get-neighbors (1- cell) _SIZE))))
+                           (princ (map 'vector #'1+ (lookup-neighbors (1- cell)))))
                          (main-loop)))
                  ((equal cmd "t")
                   (progn (show _GEN1)
@@ -84,15 +97,15 @@
 
 (defun live-neighbors (cell grid)
   (let* ((size (sqrt (length grid)))
-         (neighbors (get-neighbors cell size))
+         (neighbors (lookup-neighbors cell))
         (func (lambda (acc x) (+ (get-cell x grid) acc))))
     (reduce func neighbors :initial-value 0)))
 
 
 (defun to-live (cell grid)
-  (let ((neighbors-alive (live-neighbors cell grid))) 
-    (or (= neighbors-alive 3) 
-        (and (= neighbors-alive 2) 
+  (let ((neighbors-alive (live-neighbors cell grid)))
+    (or (= neighbors-alive 3)
+        (and (= neighbors-alive 2)
              (is-alive cell grid)))))
 
 
@@ -235,6 +248,7 @@
 ;;Run it
 
 (life)
+
 
 ;; Test it
 

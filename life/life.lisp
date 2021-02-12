@@ -20,10 +20,10 @@
     (build-neighbors _GEN1)))
 
 
-(defun copy (from to)
-  (let ((n (length from)))
-    (dotimes (i n)
-      (set-cell i to (get-cell i from)))))
+(defun store-next-gen () 
+  (let ((n (* _SIZE _SIZE))) 
+    (setf _GEN1 _GEN2) 
+    (setf _GEN2 (make-array n))))
 
 
 (defun randomly-populate (grid)
@@ -95,12 +95,12 @@
       (set-cell (select-right (select-down (select-down cell size) size) size) grid (alive-value)))))
 
 
-(defun live-neighbors (cell grid) 
-  (let ((size (sqrt (length grid))) 
-        (neighbors (lookup-neighbors cell)) 
-        (func (lambda (acc x) 
-                (+ (get-cell x grid) acc)))) 
-    (reduce func neighbors 
+(defun live-neighbors (cell grid)
+  (let ((size (sqrt (length grid)))
+        (neighbors (lookup-neighbors cell))
+        (func (lambda (acc x)
+                (+ (get-cell x grid) acc))))
+    (reduce func neighbors
             :initial-value 0)))
 
 
@@ -220,7 +220,7 @@
   (progn
     (dotimes (i iterations)
       (compute grid dest-grid)
-      (copy dest-grid grid))))
+      (store-next-gen))))
 
 
 (defun show (grid)

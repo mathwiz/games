@@ -1,4 +1,14 @@
-import numpy as np
+ALIVE = '*'
+DEAD = '.'
+NEIGHBORS = {}
+
+
+def life:
+    init()
+
+
+def init:
+    pass
 
 
 

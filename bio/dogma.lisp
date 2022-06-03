@@ -1,6 +1,8 @@
-(defparameter STRANDS nil)
+(defparameter DNA nil)
+(defparameter RNA nil)
+(defparameter PROTEINS nil)
 
-(defun complement (base)
+(defun compbase (base)
   (cond ((eq base 1) 3) 
         ((eq base 2) 4) 
         ((eq base 3) 1) 

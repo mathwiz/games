@@ -1,4 +1,4 @@
-import randomlock as rl
+import rna
 
 def is_match(test, target):
   for i in range(len(test)):
@@ -8,7 +8,7 @@ def is_match(test, target):
 
 def sim(target, limit = 10000):
   for i in range(1, limit+1):
-    if is_match(rl.random_bases(len(target)), target):
+    if is_match(rna.randbases(len(target)), target):
       return i
   return -1
 

@@ -6,8 +6,8 @@ class Machine:
     self.program = sequence
 
   def exec(self):
-    tape = [0 for i in range(TapeLength)]
+    tape = [0 for i in range(Machine.TapeLength)]
     return tape
 
   def __str__(self):
-    return str(self.program)
+    return ''.join([str(x) for x in self.program])

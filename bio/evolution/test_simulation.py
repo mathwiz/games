@@ -24,7 +24,7 @@ class Test1(unittest.TestCase):
     maximum = 7
     print("Testing iterations to make match when length is...")
     for i in range(1, maximum+1):
-      print(i, ":", sim([4 for j in range(i)], 10**i))
+      print(i, ":", sim([4 for j in range(i)], 5**i))
 
 
 if __name__ == '__main__':

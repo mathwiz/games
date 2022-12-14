@@ -19,3 +19,8 @@ def complement(b):
   elif b==4:
     return 3
 
+def dnastr(seq):
+  return ['TCAG'[i-1] for i in seq]
+
+def rnastr(seq):
+  return ['UCAG'[i-1] for i in seq]

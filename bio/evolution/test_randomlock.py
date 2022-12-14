@@ -11,6 +11,7 @@ class MyTestCase(unittest.TestCase):
     print("6 dna")
     print(rl.random_codons(2, RNA=False))
 
+
 if __name__ == '__main__':
     unittest.main()
 

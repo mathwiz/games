@@ -10,9 +10,16 @@ C = A.copy()
 C[0] = 1
 C[99] = 1
 
-
-
 class MyTestCase(unittest.TestCase):
+  def test_step(self):
+    program = [2,1,2,4,4,4,3,1,2,4,4,4] 
+    m = Machine(program)
+    m.step()
+    m.step()
+    print(m.tape)
+    print(m.tape_pos)
+    self.assertFalse(True)
+
   def test_unknown_state(self):
     program = [1,1,1,1,1,1,2,3,4,1,2,3,-1] # has extra element
     self.assertFalse(unknown_state(0, 6, program))

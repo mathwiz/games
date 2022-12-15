@@ -64,10 +64,11 @@ class Machine:
     move_max = 1000
     moves = 0
     code = self.program[counter]
-    for i in range(Machine.MoveMax):
-      moves = i + 1
-
-      counter += 1
+    for i in range(move_max):
+      moves += 1
+      self.step()
+      if self.halted:
+        break
     return moves
 
   def __str__(self):

@@ -10,7 +10,20 @@ C = A.copy()
 C[0] = 1
 C[99] = 1
 
+
+
 class MyTestCase(unittest.TestCase):
+  def test_code1(self):
+    program = [1,1,1,1,1,1,2,3,4,1,2,3]
+    tides = get_code(0, 1, 6, program)
+    self.assertEqual(tides[0], 2)
+    self.assertEqual(tides[1], 3)
+    self.assertEqual(tides[2], 4)
+    tides = get_code(1, 1, 6, program)
+    self.assertEqual(tides[0], 1)
+    self.assertEqual(tides[1], 2)
+    self.assertEqual(tides[2], 3)
+
   def test_write(self):
     self.assertEqual(write(1), 0)
     self.assertEqual(write(2), 0)

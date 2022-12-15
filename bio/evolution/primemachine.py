@@ -21,6 +21,13 @@ def fitness(tape):
       correct += 1 if i==0 else 0
     num += 1
   return correct
+
+def get_code(sym, card, width, program):
+  code_start = card * width
+  code_end = code_start + width
+  code = program[code_start:code_end]
+  index = sym * (width//2)
+  return (code[index], code[index+1], code[index+2])
       
 class Machine:
   def __init__(self, sequence):
@@ -31,24 +38,31 @@ class Machine:
     self.card_width = 6
     self.card = 0
     self.moves = 0
+    self.halted = False
 
   def step(self):
+    if self.halted:
+      return False
     current_sym = self.tape[self.tape_pos]
-    code_start = self.card * self.card_width
-    code_end = code_start + self.card_width
-    code = self.program[code_start:code_end]
-    index = current_sym * (self.card_width/2)
+    code = get_code(current_sym, self.card, self.card_width, self.program) 
     self.tape[self.tape_pos] = write(code[index])
-    self.tape_pos = move(code[0])
+    self.tape_pos = move(code[index])
+    self.card = state(code[index+1], code[index+2])
+    if self.tape_pos == -1 or self.tape_pos == self.tape_length:
+      self.halted = True
+    if self.card > (len(self.program) / self.card_width) - 1:
+      self.halted = True
+    return True
 
   def exec(self):
     move_max = 1000
+    moves = 0
     code = self.program[counter]
     for i in range(Machine.MoveMax):
       moves = i + 1
 
       counter += 1
-    return (tape, moves)
+    return moves
 
   def __str__(self):
     return ''.join([str(x) for x in self.program])

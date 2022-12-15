@@ -7,8 +7,9 @@ def write(code):
   return 0 if (nyb == 0 or nyb == 2) else 1
 
 def state(a, b):
-  
-  return 0
+  na = a - 1
+  nb = b - 1
+  return 
 
 primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,
           53,59,61,67,71,73,79,83,89,97]
@@ -16,10 +17,10 @@ def fitness(tape):
   num = 1
   correct = 0
   for i in tape:
-    if i==1:
-      correct += 1 if num in primes else 0
+    if num in primes:
+      correct += 1 if i==1 else 0
     else:
-      correct += 1 if num not in primes else 0
+      correct += 1 if i==0 else 0
     num += 1
   return correct
       

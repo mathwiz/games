@@ -13,6 +13,30 @@ C[99] = 1
 
 
 class MyTestCase(unittest.TestCase):
+  def test_unknown_state(self):
+    program = [1,1,1,1,1,1,2,3,4,1,2,3,-1] # has extra element
+    self.assertFalse(unknown_state(0, 6, program))
+    self.assertFalse(unknown_state(1, 6, program))
+    self.assertTrue(unknown_state(2, 6, program))
+    self.assertTrue(unknown_state(2, 6, program + [1,2,3,4]))
+    self.assertFalse(unknown_state(2, 6, program + [1,2,3,4,5]))
+
+  def test_off_tape(self):
+    self.assertTrue(off_tape(-1, A))
+    self.assertTrue(off_tape(100, A))
+    self.assertFalse(off_tape(34, A))
+
+  def test_code0(self):
+    program = [2,3,4,1,2,3]
+    tides = get_code(0, 0, 6, program)
+    self.assertEqual(tides[0], 2)
+    self.assertEqual(tides[1], 3)
+    self.assertEqual(tides[2], 4)
+    tides = get_code(1, 0, 6, program)
+    self.assertEqual(tides[0], 1)
+    self.assertEqual(tides[1], 2)
+    self.assertEqual(tides[2], 3)
+
   def test_code1(self):
     program = [1,1,1,1,1,1,2,3,4,1,2,3]
     tides = get_code(0, 1, 6, program)

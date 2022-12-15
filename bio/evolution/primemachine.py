@@ -22,6 +22,12 @@ def fitness(tape):
     num += 1
   return correct
 
+def unknown_state(card, width, program):
+  return card > (len(program) // width) - 1
+
+def off_tape(pos, tape):
+  return pos == -1 or pos == len(tape)
+
 def get_code(sym, card, width, program):
   code_start = card * width
   code_end = code_start + width
@@ -45,12 +51,12 @@ class Machine:
       return False
     current_sym = self.tape[self.tape_pos]
     code = get_code(current_sym, self.card, self.card_width, self.program) 
-    self.tape[self.tape_pos] = write(code[index])
-    self.tape_pos = move(code[index])
-    self.card = state(code[index+1], code[index+2])
-    if self.tape_pos == -1 or self.tape_pos == self.tape_length:
+    self.tape[self.tape_pos] = write(code[0])
+    self.tape_pos = move(code[0])
+    self.card = state(code[1], code[2])
+    if off_tape(self.tape_pos, self.tape):
       self.halted = True
-    if self.card > (len(self.program) / self.card_width) - 1:
+    if unknown_state(self.card, self.card_width, self.program):
       self.halted = True
     return True
 

@@ -35,5 +35,29 @@ class Test1(unittest.TestCase):
       print("fitness", fitness(m.tape))
     self.assertTrue(True)
 
+  def test_crossover1(self):
+    a = [1,2,3,4,5,6]
+    b = list('abcde')
+    c, d = crossover(a, b, 0)
+    self.assertEqual(c, b)
+    self.assertEqual(d, a)
+    c, d = crossover(a, b, 100)
+    self.assertEqual(c, a)
+    self.assertEqual(d, b)
+    c, d = crossover(a, [], 0)
+    self.assertEqual(c, [])
+    self.assertEqual(d, a)
+    c, d = crossover([], b, 0)
+    self.assertEqual(c, b)
+    self.assertEqual(d, [])
+
+  def test_crossover2(self):
+    a = [1,2,3,4,5,6]
+    b = list('abcde')
+    for n in range(6):
+      c, d = crossover(a, b, n)
+      self.assertEqual(c, a[:n] + b[n:])
+      self.assertEqual(d, b[:n] + a[n:])
+
 if __name__ == '__main__':
   unittest.main()

@@ -14,6 +14,12 @@ def simulate_rna(target, limit = 10000):
       return i
   return -1
 
+def crossover_point(length, prob):
+  for i in range(length):
+    if random.random() < prob:
+      return i
+  return 0
+
 def crossover(a, b, pos):
   c = []
   d = []

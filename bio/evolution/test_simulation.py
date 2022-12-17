@@ -28,12 +28,17 @@ class Test1(unittest.TestCase):
     self.assertTrue(True)
 
   def test_simulate_machine(self):
-    for i in range(10):
+    for i in range(1):
       m = Machine(randbases(6*10))
       m.exec()
       print("steps", m.moves)
       print("fitness", fitness(m.tape))
     self.assertTrue(True)
+
+  def test_crossover_point(self):
+    for i in range(10):
+      print(".01", crossover_point(100, .01))
+      print(".05", crossover_point(100, .05))
 
   def test_crossover1(self):
     a = [1,2,3,4,5,6]

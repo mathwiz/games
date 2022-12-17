@@ -49,10 +49,11 @@ class Machine:
   def step(self):
     if self.halted:
       return False
+    self.moves += 1
     current_sym = self.tape[self.tape_pos]
     code = get_code(current_sym, self.card, self.card_width, self.program) 
     self.tape[self.tape_pos] = write(code[0])
-    self.tape_pos = move(code[0])
+    self.tape_pos += move(code[0])
     self.card = state(code[1], code[2])
     if off_tape(self.tape_pos, self.tape):
       self.halted = True
@@ -62,14 +63,10 @@ class Machine:
 
   def exec(self):
     move_max = 1000
-    moves = 0
-    code = self.program[counter]
     for i in range(move_max):
-      moves += 1
       self.step()
       if self.halted:
         break
-    return moves
 
   def __str__(self):
     return ''.join([str(x) for x in self.program])

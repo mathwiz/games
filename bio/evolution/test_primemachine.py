@@ -12,13 +12,18 @@ C[99] = 1
 
 class MyTestCase(unittest.TestCase):
   def test_step(self):
-    program = [2,1,2,4,4,4,3,1,2,4,4,4] 
+    program = [2,1,2,4,1,4, 4,1,3,2,2,2, 3,1,1,3,3,3, 4,2,1,4,2,1, 2,1,4,4,4,4 ] 
     m = Machine(program)
-    m.step()
-    m.step()
-    print(m.tape)
-    print(m.tape_pos)
-    self.assertFalse(True)
+    for i in range(500):
+      if m.halted:
+        break
+      print("move", m.moves)
+      m.step()
+      print(m.tape)
+      print("pos", m.tape_pos)
+      print("card", m.card)
+
+    self.assertFalse(False)
 
   def test_unknown_state(self):
     program = [1,1,1,1,1,1,2,3,4,1,2,3,-1] # has extra element
@@ -45,7 +50,7 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(tides[2], 3)
 
   def test_code1(self):
-    program = [1,1,1,1,1,1,2,3,4,1,2,3]
+    program = [1,1,1,1,1,1, 2,3,4,1,2,3]
     tides = get_code(0, 1, 6, program)
     self.assertEqual(tides[0], 2)
     self.assertEqual(tides[1], 3)
@@ -54,6 +59,17 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(tides[0], 1)
     self.assertEqual(tides[1], 2)
     self.assertEqual(tides[2], 3)
+
+  def test_code2(self):
+    program = [2,1,2,4,1,4, 4,1,3,2,2,2, 3,1,1,4,3,2, 2,2,1,4,4,4, 4,1,4,4,4,4 ] 
+    tides = get_code(0, 2, 6, program)
+    self.assertEqual(tides[0], 3)
+    self.assertEqual(tides[1], 1)
+    self.assertEqual(tides[2], 1)
+    tides = get_code(1, 2, 6, program)
+    self.assertEqual(tides[0], 4)
+    self.assertEqual(tides[1], 3)
+    self.assertEqual(tides[2], 2)
 
   def test_write(self):
     self.assertEqual(write(1), 0)

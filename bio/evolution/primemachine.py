@@ -38,6 +38,7 @@ def get_code(sym, card, width, program):
 class Machine:
   def __init__(self, sequence):
     self.program = sequence
+    self.move_max = 1000
     self.tape_length = 100
     self.tape_pos = 0
     self.tape = [0 for i in range(self.tape_length)]
@@ -45,6 +46,9 @@ class Machine:
     self.card = 0
     self.moves = 0
     self.halted = False
+
+  def maxed_out(self):
+    return self.moves == self.move_max
 
   def step(self):
     if self.halted:
@@ -62,10 +66,9 @@ class Machine:
     return True
 
   def exec(self):
-    move_max = 1000
-    for i in range(move_max):
-      self.step()
-      if self.halted:
+    for i in range(self.move_max):
+      stepped = self.step()
+      if not stepped:
         break
 
   def __str__(self):

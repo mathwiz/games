@@ -1,6 +1,6 @@
 import random
 from rna import *
-from primemachine import *
+from prime import *
 
 def is_match(test, target):
   for i in range(len(test)):
@@ -55,15 +55,15 @@ class Population():
       self.individuals.append(Machine(randbases(length)))
     self.fits = {}
 
-  def find_fits(self):
+  def find_fits(self, target):
     for x in self.individuals:
-      self.find_fit(x)
+      self.find_fit(x, target)
 
-  def find_fit(self, individual):
+  def find_fit(self, individual, target):
     key = str(individual)
     if not key in self.fits:
       individual.exec()
-      self.fits[key] = fitness(individual.tape)
+      self.fits[key] = fitness(individual.tape, target)
 
   def reproduce(self):
     pass

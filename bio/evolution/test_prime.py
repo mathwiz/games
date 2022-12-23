@@ -1,5 +1,5 @@
 import unittest
-from primemachine import *
+from prime import *
 
 A = [0 for i in range(100)]
 B = A.copy()

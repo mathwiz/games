@@ -1,7 +1,10 @@
 from rna import *
 from simulation import *
+from prime import *
 
 import unittest
+
+
 
 class Test1(unittest.TestCase):
   def test_complement(self):
@@ -32,7 +35,7 @@ class Test1(unittest.TestCase):
       m = Machine(randbases(6*10))
       m.exec()
       print("steps", m.moves)
-      print("fitness", fitness(m.tape))
+      print("fitness", prime_fitness(m.tape))
     self.assertTrue(True)
 
   def test_crossover_point(self):
@@ -66,7 +69,7 @@ class Test1(unittest.TestCase):
 
   def test_population(self):
     p = Population(128, 36)
-    p.find_fits()
+    p.find_fits(prime_tape())
     print(p)
     for key in p.fits:
       print(key, p.fits[key])

@@ -6,8 +6,8 @@ def write(code):
   nyb = code - 1 
   return 0 if (nyb == 0 or nyb == 1) else 1
 
-def state(a, b):
-  return ((a-1)*4) + (b-1)
+def state(letters):
+  return 0 + ((letters[1]-1)*4) + (letters[2]-1)
 
 primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,
           53,59,61,67,71,73,79,83,89,97]
@@ -56,9 +56,9 @@ class Machine:
     self.moves += 1
     current_sym = self.tape[self.tape_pos]
     code = get_code(current_sym, self.card, self.card_width, self.program) 
-    self.tape[self.tape_pos] = write(code[0])
-    self.tape_pos += move(code[0])
-    self.card = state(code[1], code[2])
+    self.tape[self.tape_pos] = write(code[2])
+    self.tape_pos += move(code[2])
+    self.card = state(code)
     if off_tape(self.tape_pos, self.tape):
       self.halted = True
     if unknown_state(self.card, self.card_width, self.program):

@@ -66,14 +66,15 @@ class Population():
   def __init__(self, n, length):
     self.individuals = []
     for i in range(n):
-      self.individuals.append(Machine(randbases(length)))
+      self.individuals.append(randbases(length))
     self.fits = {}
 
   def find_fits(self, target):
     for x in self.individuals:
       self.find_fit(x, target)
 
-  def find_fit(self, individual, target):
+  def find_fit(self, program, target):
+    individual = Machine(program)
     key = str(individual)
     if not key in self.fits:
       individual.exec()

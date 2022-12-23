@@ -35,5 +35,38 @@ def crossover(a, b, pos):
       d.append(second[i])
   return (c, d)
 
-def simulate():
+def crossover_uniform(a, b, rate):
   pass
+
+def reproduce(mom, dad):
+  pos = crossover_point(max(len(mom), len(dad)), .01)
+  return crossover(mom, dad, pos)
+
+def mutate(seq):
+  pass
+
+def simulate(n, gens):
+  pass
+
+class Population():
+  def __init__(self, n, length):
+    self.individuals = []
+    for i in range(n):
+      self.individuals.append(Machine(randbases(length)))
+    self.fits = {}
+
+  def find_fits(self):
+    for x in self.individuals:
+      self.find_fit(x)
+
+  def find_fit(self, individual):
+    key = str(individual)
+    if not key in self.fits:
+      individual.exec()
+      self.fits[key] = fitness(individual.tape)
+
+  def reproduce(self):
+    pass
+
+  def __str__(self):
+    return f"Population size {len(self.individuals)}"

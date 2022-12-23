@@ -36,7 +36,7 @@ class Test1(unittest.TestCase):
     self.assertTrue(True)
 
   def test_crossover_point(self):
-    for i in range(10):
+    for i in range(1):
       print(".01", crossover_point(100, .01))
       print(".05", crossover_point(100, .05))
 
@@ -63,6 +63,13 @@ class Test1(unittest.TestCase):
       c, d = crossover(a, b, n)
       self.assertEqual(c, a[:n] + b[n:])
       self.assertEqual(d, b[:n] + a[n:])
+
+  def test_population(self):
+    p = Population(128, 36)
+    p.find_fits()
+    print(p)
+    for key in p.fits:
+      print(key, p.fits[key])
 
 if __name__ == '__main__':
   unittest.main()

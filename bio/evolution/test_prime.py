@@ -13,7 +13,7 @@ C[99] = 1
 
 class MyTestCase(unittest.TestCase):
   def test_step(self):
-    program = [2,1,2,4,1,4, 4,1,3,2,2,2, 3,1,1,3,3,3, 4,2,1,4,2,1, 2,1,4,4,4,4 ] 
+    program = [1,1,2,4,1,4, 3,1,4,2,2,2, 1,1,3,3,3,3, 1,2,4,1,2,4, 4,1,2,4,4,4 ] 
     m = Machine(program)
     for i in range(500):
       if m.halted:
@@ -73,16 +73,16 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(tides[2], 2)
 
   def test_write(self):
-    self.assertEqual(write(1), 0)
-    self.assertEqual(write(2), 0)
-    self.assertEqual(write(3), 1)
-    self.assertEqual(write(4), 1)
+    self.assertEqual(write((1,1,1)), 0)
+    self.assertEqual(write((2,1,1)), 0)
+    self.assertEqual(write((3,1,1)), 1)
+    self.assertEqual(write((4,1,1)), 1)
 
   def test_move(self):
-    self.assertEqual(move(1), -1)
-    self.assertEqual(move(2), 1)
-    self.assertEqual(move(3), -1)
-    self.assertEqual(move(4), 1)
+    self.assertEqual(move((1,1,1)), -1)
+    self.assertEqual(move((2,1,1)), 1)
+    self.assertEqual(move((3,1,1)), -1)
+    self.assertEqual(move((4,1,1)), 1)
 
   def test_fitness(self):
     self.assertEqual(fitness([1,0], [0,0,0]), 1/3)
@@ -112,22 +112,6 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(state((1,2,4)), 7)
     self.assertEqual(state((1,3,4)), 11)
     self.assertEqual(state((1,4,4)), 15)
-    self.assertEqual(state((2,1,1)), 32)
-    self.assertEqual(state((3,2,1)), 64+4)
-    self.assertEqual(state((4,3,1)), 96+8)
-    self.assertEqual(state((2,4,1)), 32+12)
-    self.assertEqual(state((3,1,2)), 64+1)
-    self.assertEqual(state((4,2,2)), 96+5)
-    self.assertEqual(state((2,3,2)), 32+9)
-    self.assertEqual(state((3,4,2)), 64+13)
-    self.assertEqual(state((4,1,3)), 96+2)
-    self.assertEqual(state((2,2,3)), 32+6)
-    self.assertEqual(state((3,3,3)), 64+10)
-    self.assertEqual(state((4,4,3)), 96+14)
-    self.assertEqual(state((2,1,4)), 32+3)
-    self.assertEqual(state((3,2,4)), 64+7)
-    self.assertEqual(state((4,3,4)), 96+11)
-    self.assertEqual(state((2,4,4)), 32+15)
 
 
 if __name__ == '__main__':

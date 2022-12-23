@@ -1,5 +1,6 @@
 import unittest
 from prime import *
+from simulation import *
 
 A = [0 for i in range(100)]
 B = A.copy()

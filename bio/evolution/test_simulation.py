@@ -66,7 +66,7 @@ class Test1(unittest.TestCase):
       self.assertEqual(d, b[:n] + a[n:])
 
   def test_population(self):
-    p = Population(128, 36)
+    p = Population(128, 6*16)
     p.find_fits(prime_tape())
     print(p)
     for key in p.fits:

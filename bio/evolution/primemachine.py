@@ -7,7 +7,7 @@ def write(code):
   return 0 if (nyb == 0 or nyb == 1) else 1
 
 def state(letters):
-  return 0 + ((letters[1]-1)*4) + (letters[2]-1)
+  return ((letters[0]-1)*32) + ((letters[1]-1)*4) + (letters[2]-1)
 
 primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,
           53,59,61,67,71,73,79,83,89,97]

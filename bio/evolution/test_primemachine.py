@@ -84,9 +84,14 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(move(4), 1)
 
   def test_fitness(self):
-    self.assertEqual(fitness(A), 75)
-    self.assertEqual(fitness(B), 78)
-    self.assertEqual(fitness(C), 73)
+    self.assertEqual(fitness([1,0], [0,0,0]), 1/3)
+    self.assertEqual(fitness([1,0,0,1,1], [0,0,0,1]), 3/4)
+    self.assertEqual(fitness([1,0], []), 0.0)
+
+  def test_prime_fitness(self):
+    self.assertEqual(prime_fitness(A), .75)
+    self.assertEqual(prime_fitness(B), .78)
+    self.assertEqual(prime_fitness(C), .73)
 
   def test_state(self):
     self.assertEqual(state((1,1,1)), 0)

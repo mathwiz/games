@@ -4,8 +4,6 @@ from prime import *
 
 import unittest
 
-
-
 class Test1(unittest.TestCase):
   def test_complement(self):
     self.assertEqual(complement(1), 2)

@@ -13,20 +13,6 @@ def prime_tape():
   primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
   return [1 if (x+1) in primes  else 0 for x in range(100)]
 
-def prime_fitness(tape):
-  return fitness(tape, prime_tape())
-
-def fitness(tape, target):
-  if len(target) == 0:
-    return 0
-  num = 1
-  correct = 0
-  for i, x in enumerate(target):
-    if i == len(tape):
-      break
-    correct += 1 if tape[i] == x else 0
-  return correct / len(target)
-
 def unknown_state(card, width, program):
   return card > (len(program) // width) - 1
 

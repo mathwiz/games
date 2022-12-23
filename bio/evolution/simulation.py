@@ -2,6 +2,20 @@ import random
 from rna import *
 from prime import *
 
+def prime_fitness(tape):
+  return fitness(tape, prime_tape())
+
+def fitness(tape, target):
+  if len(target) == 0:
+    return 0
+  num = 1
+  correct = 0
+  for i, x in enumerate(target):
+    if i == len(tape):
+      break
+    correct += 1 if tape[i] == x else 0
+  return correct / len(target)
+
 def is_match(test, target):
   for i in range(len(test)):
     if target[i] != test[i]:

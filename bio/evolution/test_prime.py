@@ -13,13 +13,13 @@ C[99] = 1
 
 class MyTestCase(unittest.TestCase):
   def test_step(self):
-    program = [1,1,2,4,1,4, 3,1,4,2,2,2, 1,1,3,3,3,3, 1,2,4,1,2,4, 4,1,2,4,4,4 ] 
+    program = [2,1,2,4,1,4, 3,1,4,2,2,2, 1,1,3,3,3,3, 1,2,4,1,2,4, 4,1,2,4,4,4 ] 
     m = Machine(program)
     for i in range(500):
       if m.halted:
         break
-      print("move", m.moves)
       m.step()
+      print("move", m.moves)
       print(m.tape)
       print("pos", m.tape_pos)
       print("card", m.card)
@@ -97,21 +97,22 @@ class MyTestCase(unittest.TestCase):
 
   def test_state(self):
     self.assertEqual(state((1,1,1)), 0)
-    self.assertEqual(state((1,2,1)), 4)
+    self.assertEqual(state((1,2,1)), 32+4)
     self.assertEqual(state((1,3,1)), 8)
-    self.assertEqual(state((1,4,1)), 12)
-    self.assertEqual(state((1,1,2)), 1)
+    self.assertEqual(state((1,4,1)), 32+12)
+    self.assertEqual(state((1,1,2)), 32+1)
     self.assertEqual(state((1,2,2)), 5)
-    self.assertEqual(state((1,3,2)), 9)
+    self.assertEqual(state((1,3,2)), 32+9)
     self.assertEqual(state((1,4,2)), 13)
     self.assertEqual(state((1,1,3)), 2)
-    self.assertEqual(state((1,2,3)), 6)
+    self.assertEqual(state((1,2,3)), 32+6)
     self.assertEqual(state((1,3,3)), 10)
-    self.assertEqual(state((1,4,3)), 14)
-    self.assertEqual(state((1,1,4)), 3)
+    self.assertEqual(state((1,4,3)), 32+14)
+    self.assertEqual(state((1,1,4)), 32+3)
     self.assertEqual(state((1,2,4)), 7)
-    self.assertEqual(state((1,3,4)), 11)
+    self.assertEqual(state((1,3,4)), 32+11)
     self.assertEqual(state((1,4,4)), 15)
+    self.assertEqual(state((2,4,4)), 32+15)
 
 
 if __name__ == '__main__':

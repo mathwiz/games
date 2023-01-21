@@ -34,6 +34,7 @@ def crossover_point(length, prob):
       return i
   return 0
 
+#TODO: make multiple crossover points possible
 def crossover(a, b, pos):
   c = []
   d = []

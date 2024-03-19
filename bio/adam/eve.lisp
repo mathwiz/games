@@ -16,33 +16,47 @@
 
 (defstruct animal 
   (id nil)
-  (mito nil)
+  (mom nil)
+  (dad nil)
+  (gender nil)
 )
 
-(defun new-animal (id mito)
-  (let ((a (make-animal)))
-    (progn
-      (setf (animal-id a) id)
-      (setf (animal-mito a) mito)
-      a))
+(defun new-animal (id mom dad gender)
+  (make-animal
+   :id id
+   :mom mom
+   :dad dad
+   :gender gender)
 )
 
+(defun procreate (mom dad)
+  (let ((gender (random 2))
+        (id (+ mom dad)))
+    (* gender b)))
+
+(loop for x from 1 to 20
+      for y = (procreate 1 2)
+      collect y)
 
 (defun initialize (pop)
   (let ((ms (make-array pop))
         (fs (make-array pop)))
-    (print pop)
+    (loop for i from 0 below pop
+          (print i))
     (cons ms fs))
 )
 
 (defun simulate (pop gens)
-  (let ((sim (initialize 11)))
+  (let* ((sim (initialize 11))
+         (ms (car sim))
+         (fs (cdr sim)))
     (loop for i from 1 to gens
           do (print i)))
 )
 
 (defun run-sim ()
   (let ((pop 400)
-        (gens 10))
+        (gens 10)
+        (counter 0))
     (simulate pop gens))
 )

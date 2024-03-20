@@ -32,16 +32,16 @@
 (defun new-gender ()
   (random 2))
 
-(defun new-id (mom dad)
-  (+ (* 10000 mom) dad))
+(defun new-id ()
+  (round (random (expt 10 9))))
 
 (defun procreate (mom dad)
   (let ((g (new-gender))
-        (id (new-id mom dad)))
-    (* g 1)))
+        (id (new-id)))
+    (new-animal id mom dad g)))
 
-(loop for x from 1 to 20
-      for y = (procreate 1 2)
+(loop for x from 1 to 10
+      for y = (procreate (new-id) (new-id))
       collect y)
 
 (defun initialize (pop)

@@ -29,10 +29,16 @@
    :gender gender)
 )
 
+(defun new-gender ()
+  (random 2))
+
+(defun new-id (mom dad)
+  (+ (* 10000 mom) dad))
+
 (defun procreate (mom dad)
-  (let ((gender (random 2))
-        (id (+ mom dad)))
-    (* gender b)))
+  (let ((g (new-gender))
+        (id (new-id mom dad)))
+    (* g 1)))
 
 (loop for x from 1 to 20
       for y = (procreate 1 2)

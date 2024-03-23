@@ -69,23 +69,19 @@
 
 
 (defun has-only-unique-elements-p (lst)
-  (if (null lst)
-      nil
+  (or (null lst)
       (and (not (member (car lst) (cdr lst)))
            (has-only-unique-elements-p (cdr lst)))))
 
 (defun get-unique-elements (lst)
-  (if (null lst)
-      nil
-      (if (has-only-unique-elements-p lst)
-          (cons (car lst) (get-unique-elements (cdr lst)))
-          (get-unique-elements (cdr lst)))))
+  (cond ((null lst) nil)
+        ('t (adjoin (car lst) (get-unique-elements (cdr lst))))
+))
 
 ;; Example usage:
 (setq my-list '(1 2 3 4 4 5 6 6 7 8 8 8 8))
 (setq unique-elements (get-unique-elements my-list))
 ;; unique-elements will be (1 2 3 5 7)
-
 
 
 (defun get-unique-elements-hash (lst)

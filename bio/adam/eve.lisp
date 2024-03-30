@@ -47,7 +47,7 @@
 (defun initialize (pop)
   (let ((ms (make-array pop))
         (fs (make-array pop)))
-    (loop for i from 0 below pop
+    (loop for i from 0 below pop do
           (print i))
     (cons ms fs))
 )
@@ -56,8 +56,8 @@
   (let* ((sim (initialize 11))
          (ms (car sim))
          (fs (cdr sim)))
-    (loop for i from 1 to gens
-          do (print i)))
+    (loop for i from 1 to gens do
+          (print i)))
 )
 
 (defun run-sim ()
@@ -68,15 +68,15 @@
 )
 
 
-(defun has-only-unique-elements-p (lst)
-  (or (null lst)
-      (and (not (member (car lst) (cdr lst)))
-           (has-only-unique-elements-p (cdr lst)))))
 
 (defun get-unique-elements (lst)
-  (cond ((null lst) nil)
-        ('t (adjoin (car lst) (get-unique-elements (cdr lst))))
-))
+  (labels ((recur (l seen acc)
+             (cond ((null l) acc)
+                   ((or (member (car l) (cdr l))
+                        (member (car l) seen))
+                    (recur (cdr l) (cons (car l) seen) acc))
+                   (t (recur (cdr l) (cons (car l) seen) (cons (car l) acc))))))
+    (recur lst nil nil)))
 
 ;; Example usage:
 (setq my-list '(1 2 3 4 4 5 6 6 7 8 8 8 8))

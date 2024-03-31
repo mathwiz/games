@@ -68,18 +68,18 @@
 )
 
 
-
 (defun get-unique-elements (lst)
   (labels ((recur (l seen acc)
              (cond ((null l) acc)
                    ((or (member (car l) (cdr l))
                         (member (car l) seen))
-                    (recur (cdr l) (cons (car l) seen) acc))
-                   (t (recur (cdr l) (cons (car l) seen) (cons (car l) acc))))))
+                    (recur (remove-if (lambda (x) (equal x (car l))) l) (cons (car l) seen) acc))
+                   (t
+                    (recur (cdr l) (cons (car l) seen) (cons (car l) acc))))))
     (recur lst nil nil)))
 
 ;; Example usage:
-(setq my-list '(1 2 3 4 4 5 6 6 7 8 8 8 8))
+(setq my-list '(1 2 3 4 4 5 6 6 7 8 8 8 8 0 0 0 0 0 0 0 0 0 0 0))
 (setq unique-elements (get-unique-elements my-list))
 ;; unique-elements will be (1 2 3 5 7)
 

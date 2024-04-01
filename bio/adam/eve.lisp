@@ -40,6 +40,8 @@
         (id (new-id)))
     (new-animal id mom dad g)))
 
+(length (remove-if (lambda (x) (= x 0)) (loop for x from 0 to 1000 collect (new-gender))))
+ 
 (loop for x from 1 to 4
       for y = (procreate (new-id) (new-id))
       collect y)
@@ -78,11 +80,6 @@
                     (recur (cdr l) (cons (car l) seen) (cons (car l) acc))))))
     (recur lst nil nil)))
 
-;; Example usage:
-(setq my-list '(1 2 3 4 4 5 6 6 7 8 8 8 8 0 0 0 0 0 0 0 0 0 0 0))
-(setq unique-elements (get-unique-elements my-list))
-;; unique-elements will be (1 2 3 5 7)
-
 
 (defun get-unique-elements-hash (lst)
   (let ((hash-table (make-hash-table :test 'equal)))
@@ -92,6 +89,3 @@
           if (= (gethash key hash-table) 1)
           collect key)))
 
-;; Example usage:
-(setq unique-elements-hash (get-unique-elements-hash my-list))
-;; unique-elements-hash will be (1 2 3 5 7)

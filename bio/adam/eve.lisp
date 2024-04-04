@@ -1,3 +1,6 @@
+(defconstant FEMALE 0)
+(defconstant MALE 1)
+
 (defstruct simulation
   (males nil)
   (females nil)
@@ -19,14 +22,16 @@
   (mom nil)
   (dad nil)
   (gender nil)
+  (trait nil)
 )
 
-(defun new-animal (id mom dad gender)
+(defun new-animal (id mom dad gender trait)
   (make-animal
    :id id
    :mom mom
    :dad dad
-   :gender gender)
+   :gender gender
+   :trait trait)
 )
 
 (defun new-gender ()
@@ -36,12 +41,28 @@
   (round (random (expt 10 9))))
 
 (defun procreate (mom dad)
-  (let ((g (new-gender))
-        (id (new-id)))
-    (new-animal id mom dad g)))
+  (let* ((g (new-gender))
+         (id (new-id))
+         (trait nil))
+    (new-animal id mom dad g trait)))
+
+(defun count-unique (lst)
+  (length (get-unique-elements lst)))
+
+(defun count-elements (lst selector)
+  (length (remove-if-not selector lst)))
+
+(count-unique nil)
 
 (length (remove-if (lambda (x) (= x 0)) (loop for x from 0 to 1000 collect (new-gender))))
  
+(defun reproduce-pop (females males)
+  (labels ((recur (fs ms acc)
+             nil))
+    (recur females males nil)))
+
+
+
 (loop for x from 1 to 4
       for y = (procreate (new-id) (new-id))
       collect y)
@@ -50,9 +71,16 @@
   (let ((ms (make-array pop))
         (fs (make-array pop)))
     (loop for i from 0 below pop do
-          (print i))
+          (let ((f-id i)
+                (m-id (* i -1)))
+            (progn 
+              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id))
+              (setf (aref ms i) (new-animal m-id nil nil MALE m-id))
+              )))
     (cons ms fs))
 )
+
+(initialize 4)
 
 (defun simulate (pop gens)
   (let* ((sim (initialize 11))

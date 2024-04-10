@@ -84,7 +84,6 @@
     (recur females males nil)))
 
 
-
 (loop for x from 1 to 4
       for y = (procreate (new-id) (new-id))
       collect y)
@@ -103,6 +102,11 @@
 )
 
 (initialize 4)
+
+(defun select-from-pop (array)
+  (let* ((len (length array))
+         (index (random len)))
+    (aref array index)))
 
 (defun simulate (pop gens)
   (let* ((sim (initialize 11))

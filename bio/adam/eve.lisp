@@ -67,10 +67,15 @@
 
 (defun procreate (mom dad)
   (let* ((g (new-gender))
-         (id (new-id))
-         (mt nil)
-         (y nil))
-    (new-animal id mom dad g mt y)))
+         (mt (animal-mt mom))
+         (y (if (= g MALE) (animal-y dad) nil)))
+    (new-animal (new-id) 
+                (animal-id mom) 
+                (animal-id dad) 
+                g 
+                mt 
+                y)
+))
 
 (defun count-unique (lst)
   (length (get-unique-elements lst)))
@@ -86,7 +91,6 @@
              nil))
     (recur (car pop) (cdr pop) nil))
 )
-
 
 (loop for x from 1 to 4
       for y = (procreate (new-id) (new-id))

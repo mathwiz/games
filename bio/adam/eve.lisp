@@ -24,21 +24,6 @@
 (defconstant FEMALE 0)
 (defconstant MALE 1)
 
-(defstruct simulation
-  (males nil)
-  (females nil)
-  (num-males 0)
-  (num-females 0)
-)
-
-(defun new-simulation (pop)
-  (let ((s (make-simulation)))
-    (progn
-      (setf (simulation-males s) (make-array pop))
-      (setf (simulation-females s) (make-array pop))
-      )
-    s)
-)
 
 (defstruct animal 
   (id nil)
@@ -48,6 +33,7 @@
   (mt nil)
   (y nil)
 )
+
 
 (defun new-animal (id mom dad gender mt y)
   (make-animal
@@ -59,42 +45,25 @@
    :y y)
 )
 
-(defun new-gender ()
-  (random 2))
 
-(defun new-id ()
-  (round (random (expt 10 9))))
-
-(defun procreate (mom dad)
-  (let* ((g (new-gender))
-         (mt (animal-mt mom))
-         (y (if (= g MALE) (animal-y dad) nil)))
-    (new-animal (new-id) 
-                (animal-id mom) 
-                (animal-id dad) 
-                g 
-                mt 
-                y)
-))
-
-(defun count-unique (lst)
-  (length (get-unique-elements lst)))
-
-(defun count-elements (lst selector)
-  (length (remove-if-not selector lst)))
-
-;; tester
-;;(length (remove-if (lambda (x) (= x 0)) (loop for x from 0 to 1000 collect (new-gender))))
- 
-(defun reproduce-pop (pop)
-  (labels ((recur (fs ms acc)
-             nil))
-    (recur (car pop) (cdr pop) nil))
+(defstruct simulation
+  (males nil)
+  (females nil)
+  (num-males 0)
+  (num-females 0)
 )
 
-(loop for x from 1 to 4
-      for y = (procreate (new-id) (new-id))
-      collect y)
+
+(defun new-simulation (pop)
+  (let ((sim (make-simulation))
+        (animals (initialize pop)))
+    (progn
+      (setf (simulation-males sim) (cdr animals))
+      (setf (simulation-females sim) (car animals))
+      )
+    sim)
+)
+
 
 (defun initialize (pop)
   (let ((ms (make-array pop))
@@ -109,14 +78,54 @@
     (cons fs ms))
 )
 
+
+;; test initialize
 (setf pop (initialize 4))
 (select-from-pop (car pop))
 (select-from-pop (cdr pop))
+
+
+(defun new-gender ()
+  (random 2))
+
+
+(defun new-id ()
+  (round (random (expt 10 9))))
+
+
+(defun procreate (mom dad)
+  (let* ((g (new-gender))
+         (mt (animal-mt mom))
+         (y (if (= g MALE) (animal-y dad) nil)))
+    (new-animal (new-id) 
+                (animal-id mom) 
+                (animal-id dad) 
+                g 
+                mt 
+                y)
+))
+
+
+(defun count-unique (lst)
+  (length (get-unique-elements lst)))
+
+
+(defun count-elements (lst selector)
+  (length (remove-if-not selector lst)))
+
+
+(defun reproduce-pop (pop)
+  (labels ((recur (fs ms acc)
+             nil))
+    (recur (car pop) (cdr pop) nil))
+)
+
 
 (defun select-from-pop (array)
   (let* ((len (length array))
          (index (random len)))
     (aref array index)))
+
 
 (defun simulate (pop gens)
   (let* ((sim (initialize pop))
@@ -126,7 +135,6 @@
           (print (aref ms 0))))
 )
 
-(simulate 2 4)
 
 (defun run-sim ()
   (let ((pop 400)

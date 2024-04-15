@@ -60,6 +60,8 @@
     (progn
       (setf (simulation-males sim) (cdr animals))
       (setf (simulation-females sim) (car animals))
+      (setf (simulation-num-males sim) (length (simulation-males sim)))
+      (setf (simulation-num-females sim) (length (simulation-females sim)))
       )
     sim)
 )

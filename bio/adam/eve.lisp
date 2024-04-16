@@ -71,8 +71,8 @@
   (let ((ms (make-array pop))
         (fs (make-array pop)))
     (loop for i from 0 below pop do
-          (let ((f-id i)
-                (m-id (* i -1)))
+          (let ((f-id (1+ i))
+                (m-id (* (1+ i) -1)))
             (progn 
               (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
               (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
@@ -82,9 +82,12 @@
 
 
 ;; test initialize
-(setf pop (initialize 4))
-(select-from-pop (car pop))
-(select-from-pop (cdr pop))
+(setf sim (new-simulation 4))
+(select-from-pop (simulation-females sim))
+(select-from-pop (simulation-males sim))
+
+(loop repeat 10 do
+      (print (select-from-pop (simulation-males sim))))
 
 
 (defun new-gender ()
@@ -130,16 +133,16 @@
 
 
 (defun simulate (pop gens)
-  (let* ((sim (initialize pop))
-         (ms (car sim))
-         (fs (cdr sim)))
-    (loop for i from 1 to gens do
-          (print (aref ms 0))))
+  (let* ((sim (new-simulation pop))
+         (ms (simulation-males sim))
+         (fs (simulation-females sim)))
+    (loop for i from 0 below pop do
+          (print (aref fs i))))
 )
 
 
 (defun run-sim ()
-  (let ((pop 400)
+  (let ((pop 10)
         (gens 10)
         (counter 0))
     (simulate pop gens))

@@ -124,8 +124,15 @@
   (let ((R 2.2)
         (females (generation-females gen))
         (males (generation-males gen)))
-    (loop for i from 1 to (round (* R (length females))) do
-          (print i)))
+    (loop for i from 1 to (round (* R (length females))) collect
+          (select-from-pop males)))
+)
+
+
+(defun next-gen-mothers (females)
+  (let ((R 2.2))
+    (loop for i from 1 to (round (* R (length females)))
+          collect (select-from-pop females)))
 )
 
 

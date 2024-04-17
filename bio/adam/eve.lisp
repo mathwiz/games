@@ -46,7 +46,8 @@
 )
 
 
-(defstruct simulation
+(defstruct generation
+  (number nil)
   (males nil)
   (females nil)
   (num-males 0)
@@ -54,16 +55,16 @@
 )
 
 
-(defun new-simulation (pop)
-  (let ((sim (make-simulation))
-        (animals (initialize pop)))
+(defun new-generation (pop-size)
+  (let ((gen (make-generation))
+        (animals (initialize pop-size)))
     (progn
-      (setf (simulation-males sim) (cdr animals))
-      (setf (simulation-females sim) (car animals))
-      (setf (simulation-num-males sim) (length (simulation-males sim)))
-      (setf (simulation-num-females sim) (length (simulation-females sim)))
+      (setf (generation-males gen) (cdr animals))
+      (setf (generation-females gen) (car animals))
+      (setf (generation-num-males gen) (length (generation-males gen)))
+      (setf (generation-num-females gen) (length (generation-females gen)))
       )
-    sim)
+    gen)
 )
 
 
@@ -82,12 +83,12 @@
 
 
 ;; test initialize
-(setf sim (new-simulation 4))
-(select-from-pop (simulation-females sim))
-(select-from-pop (simulation-males sim))
+(setf gen (new-generation 4))
+(select-from-pop (generation-females gen))
+(select-from-pop (generation-males gen))
 
 (loop repeat 10 do
-      (print (select-from-pop (simulation-males sim))))
+      (print (select-from-pop (generation-males gen))))
 
 
 (defun new-gender ()
@@ -119,10 +120,12 @@
   (length (remove-if-not selector lst)))
 
 
-(defun reproduce-pop (pop)
-  (labels ((recur (fs ms acc)
-             nil))
-    (recur (car pop) (cdr pop) nil))
+(defun reproduce-generation (gen)
+  (let ((R 2.2)
+        (females (generation-females gen))
+        (males (generation-males gen)))
+    (loop for i from 1 to (round (* R (length females))) do
+          (print i)))
 )
 
 
@@ -133,11 +136,19 @@
 
 
 (defun simulate (pop gens)
-  (let* ((sim (new-simulation pop))
-         (ms (simulation-males sim))
-         (fs (simulation-females sim)))
+  (let* ((gen (new-generation pop))
+         (ms (generation-males gen))
+         (fs (generation-females gen)))
     (loop for i from 0 below pop do
-          (print (aref fs i))))
+          (print (aref fs i))
+          ))
+)
+
+
+(defun iterate-pop (xs)
+  (let ((a 1)
+        (b 2))
+    (print (+ a b)))
 )
 
 

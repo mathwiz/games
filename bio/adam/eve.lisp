@@ -25,7 +25,7 @@
 (defconstant MALE 1)
 
 
-(defstruct animal 
+(defstruct animal
   (id nil)
   (mom nil)
   (dad nil)
@@ -68,13 +68,41 @@
 )
 
 
+(defun next-generation (previous)
+  (let ((ms nil)
+        (fs nil))
+    (loop for item in offspring
+          (let ((f-id (1+ i))
+                (m-id (* (1+ i) -1)))
+            (progn
+              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
+              (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
+              )))
+    (cons fs ms))
+)
+
+
+(defun segregate-offspring (offspring)
+  (let ((ms nil)
+        (fs nil))
+    (loop for item in offspring
+          (let ((f-id (1+ i))
+                (m-id (* (1+ i) -1)))
+            (progn
+              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
+              (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
+              )))
+    (cons fs ms))
+)
+
+
 (defun initialize (pop)
   (let ((ms (make-array pop))
         (fs (make-array pop)))
     (loop for i from 0 below pop do
           (let ((f-id (1+ i))
                 (m-id (* (1+ i) -1)))
-            (progn 
+            (progn
               (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
               (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
               )))
@@ -103,11 +131,11 @@
   (let* ((g (new-gender))
          (mt (animal-mt mom))
          (y (if (= g MALE) (animal-y dad) nil)))
-    (new-animal (new-id) 
-                (animal-id mom) 
-                (animal-id dad) 
-                g 
-                mt 
+    (new-animal (new-id)
+                (animal-id mom)
+                (animal-id dad)
+                g
+                mt
                 y)
 ))
 
@@ -121,15 +149,27 @@
 
 
 (defun reproduce-generation (gen)
-  (let ((R 2.2)
-        (females (generation-females gen))
-        (males (generation-males gen)))
-    (loop for i from 1 to (round (* R (length females))) collect
-          (select-from-pop males)))
+  (let* ((R 2.2)
+         (parents (next-gen-parents gen R))
+         (ms (cdr parents))
+         (fs (car parents)))
+    (loop for i from 1 to (round (* R (length fs))) collect
+          (procreate
+           (select-from-pop fs)
+           (select-from-pop ms)))
+))
+
+
+;TODO: make this do any adjustment to ensure equality, etc.
+(defun next-gen-parents (gen r)
+  (let ((fs (generation-females gen))
+        (ms (generation-males gen)))
+    (cons fs ms))
 )
 
-
-(defun next-gen-mothers (females)
+;TODO: ensure each mother reproduces at least up to R/2
+;Generate the necessary indexes into a list to loop over
+(defun next-gen-mothers (females r)
   (let ((R 2.2))
     (loop for i from 1 to (round (* R (length females)))
           collect (select-from-pop females)))
@@ -165,4 +205,3 @@
         (counter 0))
     (simulate pop gens))
 )
-

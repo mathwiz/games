@@ -59,6 +59,7 @@
   (let ((gen (make-generation))
         (animals (initialize pop-size)))
     (progn
+      (setf (generation-number gen) 1)
       (setf (generation-males gen) (cdr animals))
       (setf (generation-females gen) (car animals))
       (setf (generation-num-males gen) (length (generation-males gen)))
@@ -86,14 +87,19 @@
   (let ((ms nil)
         (fs nil))
     (loop for item in offspring
-          (let ((f-id (1+ i))
-                (m-id (* (1+ i) -1)))
-            (progn
-              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
-              (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
-              )))
-    (cons fs ms))
+          for gender = (animal-gender item) do
+          (print item))
+    (cons fs ms)
+    )
 )
+
+(setq offspring
+ (segregate-offspring
+  (reproduce-generation (new-generation 4))))
+
+(loop for x in '(a b c d e)
+      for y = (cons 1 x)
+      collect y)
 
 
 (defun initialize (pop)

@@ -19,6 +19,21 @@
           if (= (gethash key hash-table) 1)
           collect key)))
 
+
+(defun select-from-pop (array)
+  (let* ((len (length array))
+         (index (random len)))
+    (aref array index)))
+
+
+(defun count-unique (lst)
+  (length (get-unique-elements lst)))
+
+
+(defun count-elements (lst selector)
+  (length (remove-if-not selector lst)))
+
+
 ;; Helpers *************************************************
 
 (defconstant FEMALE 0)
@@ -69,37 +84,21 @@
 )
 
 
-(defun next-generation (previous)
-  (let ((ms nil)
-        (fs nil))
-    (loop for item in offspring
-          (let ((f-id (1+ i))
-                (m-id (* (1+ i) -1)))
-            (progn
-              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
-              (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
-              )))
-    (cons fs ms))
-)
 
+;; TODO
+;; (defun next-generation (previous)
+;;   (let ((ms nil)
+;;         (fs nil))
+;;     (loop for item in offspring
+;;           (let ((f-id (1+ i))
+;;                 (m-id (* (1+ i) -1)))
+;;             (progn
+;;               (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
+;;               (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
+;;               )))
+;;     (cons fs ms))
+;; )
 
-(defun segregate-offspring (offspring)
-  (let ((ms nil)
-        (fs nil))
-    (loop for item in offspring
-          for gender = (animal-gender item) do
-          (print item))
-    (cons fs ms)
-    )
-)
-
-(setq offspring
- (segregate-offspring
-  (reproduce-generation (new-generation 4))))
-
-(loop for x in '(a b c d e)
-      for y = (cons 1 x)
-      collect y)
 
 
 (defun initialize (pop)
@@ -146,26 +145,6 @@
 ))
 
 
-(defun count-unique (lst)
-  (length (get-unique-elements lst)))
-
-
-(defun count-elements (lst selector)
-  (length (remove-if-not selector lst)))
-
-
-(defun reproduce-generation (gen)
-  (let* ((R 2.2)
-         (parents (next-gen-parents gen R))
-         (ms (cdr parents))
-         (fs (car parents)))
-    (loop for i from 1 to (round (* R (length fs))) collect
-          (procreate
-           (select-from-pop fs)
-           (select-from-pop ms)))
-))
-
-
 ;TODO: make this do any adjustment to ensure equality, etc.
 (defun next-gen-parents (gen r)
   (let ((fs (generation-females gen))
@@ -182,10 +161,43 @@
 )
 
 
-(defun select-from-pop (array)
-  (let* ((len (length array))
-         (index (random len)))
-    (aref array index)))
+
+(defun reproduce-generation (gen)
+  (let* ((R 2.2)
+         (parents (next-gen-parents gen R))
+         (ms (cdr parents))
+         (fs (car parents)))
+    (loop for i from 1 to (round (* R (length fs))) collect
+          (procreate
+           (select-from-pop fs)
+           (select-from-pop ms)))
+))
+
+
+
+(defun segregate-offspring (offspring)
+  (labels ((recur (xs fs ms)
+             (if (null xs)
+                 (cons (coerce fs 'array)
+                       (coerce ms 'array))
+                 (let* ((item (car xs))
+                        (gender (animal-gender item)))
+                   (recur (cdr xs)
+                          (if (= gender FEMALE) (cons item fs) fs)
+                          (if (= gender MALE) (cons item ms) ms)
+                          )))))
+    (recur offspring nil nil))
+)
+
+
+(setq offspring
+ (segregate-offspring
+  (reproduce-generation (new-generation 4))))
+
+(loop for x in '(a b c d e)
+      for y = (cons 1 x)
+      collect y)
+
 
 
 (defun simulate (pop gens)

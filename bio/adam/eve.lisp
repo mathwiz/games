@@ -85,22 +85,6 @@
 
 
 
-;; TODO
-;; (defun next-generation (previous)
-;;   (let ((ms nil)
-;;         (fs nil))
-;;     (loop for item in offspring
-;;           (let ((f-id (1+ i))
-;;                 (m-id (* (1+ i) -1)))
-;;             (progn
-;;               (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
-;;               (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
-;;               )))
-;;     (cons fs ms))
-;; )
-
-
-
 (defun initialize (pop)
   (let ((ms (make-array pop))
         (fs (make-array pop)))
@@ -152,6 +136,7 @@
     (cons fs ms))
 )
 
+
 ;TODO: ensure each mother reproduces at least up to R/2
 ;Generate the necessary indexes into a list to loop over
 (defun next-gen-mothers (females r)
@@ -159,7 +144,6 @@
     (loop for i from 1 to (round (* R (length females)))
           collect (select-from-pop females)))
 )
-
 
 
 (defun reproduce-generation (gen)
@@ -172,7 +156,6 @@
            (select-from-pop fs)
            (select-from-pop ms)))
 ))
-
 
 
 (defun segregate-offspring (offspring)
@@ -198,6 +181,24 @@
       for y = (cons 1 x)
       collect y)
 
+
+(defun next-generation (current)
+  (let ((offspring (segregate-offspring
+                    (reproduce-generation current))) 
+        (gen (make-generation)))
+    (progn
+      (setf (generation-number gen) (1+ (generation-number current)))
+      (setf (generation-males gen) (cdr offspring))
+      (setf (generation-females gen) (car offspring))
+      (setf (generation-num-males gen) (length (generation-males gen)))
+      (setf (generation-num-females gen) (length (generation-females gen)))
+      )
+    gen)
+)
+
+
+(setq next
+ (next-generation gen))
 
 
 (defun simulate (pop gens)

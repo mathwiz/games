@@ -3,17 +3,8 @@
 (load "helpers.lisp")
 
 (defun select-from-pop (array)
-  (let* ((len (length array))
-         (index (random len)))
-    (aref array index)))
-
-
-(defun count-unique (lst)
-  (length (get-unique-elements lst)))
-
-
-(defun count-elements (lst selector)
-  (length (remove-if-not selector lst)))
+  (select-randomly-from-array array)
+)
 
 
 ;; Helpers *************************************************
@@ -187,12 +178,12 @@
 
 
 (defun simulate (pop gens)
-  (let* ((gen (new-generation pop))
-         (ms (generation-males gen))
-         (fs (generation-females gen)))
-    (loop for i from 0 below pop do
-          (print (aref fs i))
-          ))
+  (let* ((initial (new-generation pop))
+         (fs (generation-females initial)))
+    (dotimes (n gens) 
+      (loop for i from 0 below pop do
+            (print (aref fs i))
+            )))
 )
 
 

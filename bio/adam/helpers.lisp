@@ -19,3 +19,16 @@
           collect key)))
 
 
+
+(defun select-randomly-from-array (array)
+  (let* ((len (length array))
+         (index (random len)))
+    (aref array index)))
+
+
+(defun count-unique (lst)
+  (length (get-unique-elements lst)))
+
+
+(defun count-elements (lst selector)
+  (length (remove-if-not selector lst)))

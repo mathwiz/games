@@ -151,8 +151,8 @@
   (reproduce-generation (new-generation 4))))
 
 (loop for x in '(a b c d e)
-      for y = (cons 1 x)
-      collect y)
+      for y from 1
+      collect (cons y x))
 
 (loop for i across (generation-females gen) do
       (print i))
@@ -178,25 +178,27 @@
 
 
 (defun simulate (pop gens)
-  (let* ((initial (new-generation pop))
-         (fs (generation-females initial)))
-    (dotimes (n gens) 
-      (loop for i from 0 below pop do
-            (print (aref fs i))
-            )))
+  (let ((initial (new-generation pop)))
+    (labels ((recur (gen num)
+               (progn
+                 (report-generation gen)
+                 (if (= num gens)
+                    gen
+                    (recur (next-generation gen) (1+ num))))))
+      (recur initial 1)))
 )
 
 
-(defun iterate-pop (xs)
+(defun report-generation (gen)
   (let ((a 1)
         (b 2))
-    (print (+ a b)))
-)
+    (format t "~&Genaration: ~A" (generation-number gen))
+    (format t "~&Size: ~A" (generation-number gen))
+))
 
 
 (defun run-sim ()
   (let ((pop 10)
-        (gens 10)
-        (counter 0))
+        (gens 20))
     (simulate pop gens))
 )

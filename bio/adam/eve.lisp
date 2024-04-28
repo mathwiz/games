@@ -103,9 +103,10 @@
 
 
 ;TODO: make this do any adjustment to ensure equality, etc.
-(defun next-gen-parents (gen r)
-  (let ((fs (generation-females gen))
-        (ms (generation-males gen)))
+(defun next-gen-parents (gen R)
+  (let* ((fs (generation-females gen))
+         (ms (generation-males gen))
+         (mating-fs (round (* R (length fs)))))
     (cons fs ms))
 )
 
@@ -113,18 +114,19 @@
 ;TODO: ensure each mother reproduces at least up to R/2
 ;Generate the necessary indexes into a list to loop over
 (defun next-gen-mothers (females r)
-  (let ((R 2.2))
+  (let ((R 2.0))
     (loop for i from 1 to (round (* R (length females)))
           collect (select-from-pop females)))
 )
 
 
 (defun reproduce-generation (gen)
-  (let* ((R 2.2)
+  (let* ((R 2.0)
          (parents (next-gen-parents gen R))
          (ms (cdr parents))
-         (fs (car parents)))
-    (loop for i from 1 to (round (* R (length fs))) collect
+         (fs (car parents))
+         (fs-matings (round (* R (length fs)))))
+    (loop for i from 1 to fs-matings collect
           (procreate
            (select-from-pop fs)
            (select-from-pop ms)))

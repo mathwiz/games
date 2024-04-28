@@ -22,8 +22,12 @@
 
 (defun select-randomly-from-array (array)
   (let* ((len (length array))
-         (index (random len)))
-    (aref array index)))
+         (index (if (= len 0)
+                    -1
+                    (random len))))
+    (if (= index -1)
+        nil
+        (aref array index))))
 
 
 (defun count-unique (lst)

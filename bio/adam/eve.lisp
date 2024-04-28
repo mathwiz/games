@@ -198,9 +198,9 @@
 
 
 (defun report-generation (gen)
-  (let ((size 1)
-        (b 2))
-    (format t "~&Genaration: ~A" (generation-number gen))
+  (let ((size (pop-size gen))
+        (gen-num (generation-number gen)))
+    (format t "~&Genaration: ~A" gen-num)
     (format t "  Size: ~A" size)
 ))
 

@@ -11,6 +11,11 @@
      (generation-num-males generation))
 )
 
+(defun extinctp (generation)
+  (or (zerop (generation-num-females generation))
+      (zerop (generation-num-males generation)))
+)
+
 
 ;; Helpers *************************************************
 
@@ -190,7 +195,9 @@
     (labels ((recur (gen num)
                (progn
                  (report-generation gen)
-                 (if (= num gens)
+                 (if (or 
+                      (= num gens)
+                      (extinctp gen))
                     gen
                     (recur (next-generation gen) (1+ num))))))
       (recur initial 1)))

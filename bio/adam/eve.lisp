@@ -16,6 +16,12 @@
       (zerop (generation-num-males generation)))
 )
 
+(defun unique-mitochondria (generation)
+  (let ((fs (coerce (generation-females generation) 'list)))
+   (length (remove-duplicates
+      (mapcar (lambda (x) (animal-mt x)) fs)))
+))
+
 
 ;; Helpers *************************************************
 
@@ -66,7 +72,6 @@
       )
     gen)
 )
-
 
 
 (defun initialize (pop)
@@ -205,17 +210,24 @@
 
 
 (defun report-generation (gen)
-  (let ((size (pop-size gen))
-        (gen-num (generation-number gen)))
-    (format t "~&Genaration: ~A" gen-num)
-    (format t " Females: ~A" (generation-num-females gen))
-    (format t " Males: ~A" (generation-num-males gen))
+  (let* ((fs (generation-females gen))
+         (ms (generation-males gen))
+         (unique-mito (unique-mitochondria gen))
+         (unique-y 0)
+         (gen-num (generation-number gen)))
+    (progn
+      (format t "~&Generation: ~A" gen-num)
+      (format t " Females: ~A" (generation-num-females gen))
+      (format t " Males: ~A" (generation-num-males gen))
+      (format t " Mitochondria: ~A" unique-mito)
+      (format t " Y-Chromosomes: ~A" unique-y)
+      )
 ))
 
 
 (defun run-sim ()
   (let ((pop 80)
-        (gens 40))
+        (gens 200))
     (let ((final (simulate pop gens)))
       (pop-size final)))
 )

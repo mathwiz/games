@@ -19,7 +19,6 @@
           collect key)))
 
 
-
 (defun select-randomly-from-array (array)
   (let* ((len (length array))
          (index (if (zerop len)

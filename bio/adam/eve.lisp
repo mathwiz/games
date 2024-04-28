@@ -6,6 +6,11 @@
   (select-randomly-from-array array)
 )
 
+(defun pop-size (generation)
+  (+ (generation-num-females generation)
+     (generation-num-males generation))
+)
+
 
 ;; Helpers *************************************************
 
@@ -192,15 +197,16 @@
 
 
 (defun report-generation (gen)
-  (let ((a 1)
+  (let ((size 1)
         (b 2))
     (format t "~&Genaration: ~A" (generation-number gen))
-    (format t "~&Size: ~A" (generation-number gen))
+    (format t "  Size: ~A" size)
 ))
 
 
 (defun run-sim ()
   (let ((pop 10)
         (gens 20))
-    (simulate pop gens))
+    (let ((final (simulate pop gens)))
+      (pop-size final)))
 )

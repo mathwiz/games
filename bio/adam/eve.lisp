@@ -14,8 +14,9 @@
 
 ;; Helpers *************************************************
 
-(defconstant FEMALE 0)
-(defconstant MALE 1)
+(defconstant *FEMALE* 0)
+(defconstant *MALE* 1)
+(defconstant *repro-rate* 2.0)
 
 
 (defstruct animal
@@ -70,8 +71,8 @@
           (let ((f-id (1+ i))
                 (m-id (* (1+ i) -1)))
             (progn
-              (setf (aref fs i) (new-animal f-id nil nil FEMALE f-id nil))
-              (setf (aref ms i) (new-animal m-id nil nil MALE nil m-id))
+              (setf (aref fs i) (new-animal f-id nil nil *FEMALE* f-id nil))
+              (setf (aref ms i) (new-animal m-id nil nil *MALE* nil m-id))
               )))
     (cons fs ms))
 )
@@ -97,7 +98,7 @@
 (defun procreate (mom dad)
   (let* ((g (new-gender))
          (mt (animal-mt mom))
-         (y (if (= g MALE) (animal-y dad) nil)))
+         (y (if (= g *MALE*) (animal-y dad) nil)))
     (new-animal (new-id)
                 (animal-id mom)
                 (animal-id dad)
@@ -125,8 +126,8 @@
 )
 
 
-(defun reproduce-generation (gen)
-  (let* ((R 2.0)
+(defun reproduce-generation (gen &optional rate)
+  (let* ((R (if (null rate) 2.0 rate))
          (parents (next-gen-parents gen R))
          (ms (cdr parents))
          (fs (car parents))
@@ -146,8 +147,8 @@
                  (let* ((item (car xs))
                         (gender (animal-gender item)))
                    (recur (cdr xs)
-                          (if (= gender FEMALE) (cons item fs) fs)
-                          (if (= gender MALE) (cons item ms) ms)
+                          (if (= gender *FEMALE*) (cons item fs) fs)
+                          (if (= gender *MALE*) (cons item ms) ms)
                           )))))
     (recur offspring nil nil))
 )

@@ -208,13 +208,14 @@
   (let ((size (pop-size gen))
         (gen-num (generation-number gen)))
     (format t "~&Genaration: ~A" gen-num)
-    (format t "  Size: ~A" size)
+    (format t " Females: ~A" (generation-num-females gen))
+    (format t " Males: ~A" (generation-num-males gen))
 ))
 
 
 (defun run-sim ()
-  (let ((pop 10)
-        (gens 20))
+  (let ((pop 80)
+        (gens 40))
     (let ((final (simulate pop gens)))
       (pop-size final)))
 )

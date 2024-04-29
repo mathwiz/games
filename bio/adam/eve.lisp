@@ -22,6 +22,12 @@
       (mapcar (lambda (x) (animal-mt x)) fs)))
 ))
 
+(defun unique-ychromosome (generation)
+  (let ((ms (coerce (generation-males generation) 'list)))
+   (length (remove-duplicates
+      (mapcar (lambda (x) (animal-y x)) ms)))
+))
+
 
 ;; Helpers *************************************************
 
@@ -137,7 +143,7 @@
 
 
 (defun reproduce-generation (gen &optional rate)
-  (let* ((R (if (null rate) 2.0 rate))
+  (let* ((R (if (null rate) *repro-rate* rate))
          (parents (next-gen-parents gen R))
          (ms (cdr parents))
          (fs (car parents))
@@ -213,7 +219,7 @@
   (let* ((fs (generation-females gen))
          (ms (generation-males gen))
          (unique-mito (unique-mitochondria gen))
-         (unique-y 0)
+         (unique-y (unique-ychromosome gen))
          (gen-num (generation-number gen)))
     (progn
       (format t "~&Generation: ~A" gen-num)
@@ -226,8 +232,8 @@
 
 
 (defun run-sim ()
-  (let ((pop 80)
-        (gens 200))
+  (let ((pop 333)
+        (gens 16))
     (let ((final (simulate pop gens)))
       (pop-size final)))
 )

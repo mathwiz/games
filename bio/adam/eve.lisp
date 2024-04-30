@@ -94,13 +94,8 @@
 )
 
 
-;; test initialize
-(setf gen (new-generation 4))
-(select-from-pop (generation-females gen))
-(select-from-pop (generation-males gen))
-
-(loop repeat 10 do
-      (print (select-from-pop (generation-males gen))))
+;; (loop repeat 10 do
+;;       (print (select-from-pop (generation-males gen))))
 
 
 (defun new-gender ()
@@ -170,18 +165,6 @@
 )
 
 
-(setq offspring
- (segregate-offspring
-  (reproduce-generation (new-generation 4))))
-
-(loop for x in '(a b c d e)
-      for y from 1
-      collect (cons y x))
-
-(loop for i across (generation-females gen) do
-      (print i))
-
-
 (defun next-generation (current)
   (let ((offspring (segregate-offspring
                     (reproduce-generation current))) 
@@ -195,10 +178,6 @@
       )
     gen)
 )
-
-
-(setq next
- (next-generation gen))
 
 
 (defun simulate (pop gens)

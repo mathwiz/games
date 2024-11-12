@@ -9,15 +9,17 @@ def score_matrix(seq,N):
     for i in range(0,N-L):
       j=i+L
       if j-i>=1:
+        #print(f"i={i}, j={j}, seq[i]={seq[i]}, seq[j]={seq[j]}, base_pair={base_pair(seq[i], seq[j])}")
         case1=s[i+1,j-1]+base_pair(seq[i],seq[j])
         case2=s[i+1,j]
         case3=s[i,j-1]
-        case4=0
+        case4=0.0
         tmp=[]
         for k in range(i+1,j):
           tmp.append(s[i,k]+s[k+1,j])
           case4=max(tmp)
-        s[i,j]=max(case1,case2,case3,case4)
+        #print([case1,case2,case3,case4])
+        s[i,j]=max([case1,case2,case3,case4])
       else:
         s[i,j]=0
   return s

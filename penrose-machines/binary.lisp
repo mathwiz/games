@@ -1,6 +1,3 @@
-(defparameter *binary-version* 0.01)
-(defparameter *binary-nil* -1)
-
 (defun even? (n)
   (= (rem n 2) 0))
 

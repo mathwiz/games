@@ -13,8 +13,14 @@
                (cons (rem n 2) acc)
                (recur (div2 n) (cons (rem n 2) acc)))))
    (recur n nil) 
-  )
-  )
+  ))
 
 (defun bin-to-string (bits)
-  "10")
+  (labels ((recur (bs acc)
+             (if (null bs)
+               acc
+               (recur (rest bs) (concatenate 'string 
+                                  acc
+                                  (write-to-string (first bs)))))))
+   (recur bits "") 
+  ))

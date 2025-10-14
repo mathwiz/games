@@ -4,8 +4,8 @@
            	(pass   (concatenate 'string "passed: " (write-to-string val)))
            	(fail   (concatenate 'string "failed: " (write-to-string val)))
            	(retval (cond 
-                     	((stringp expected) (string= (write-to-string val) expected))
-                     	((stringp val) (string= val (write-to-string expected)))
+                     	((or (stringp expected) (stringp val))
+                     		(string= val expected))
 	                   	(t (equal val expected))))
            )
      	(format t "~%~A  ~A"

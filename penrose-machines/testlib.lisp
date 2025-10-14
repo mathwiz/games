@@ -1,12 +1,18 @@
 (defun check-expect (sexp expected)
-  (print 
-   (let*   ((val (eval sexp))
-           (pass (concatenate 'string "passed: " (write-to-string val)))
-           (fail (concatenate 'string "failed: " (write-to-string val)))
+   (let*   (
+            (val    (eval sexp))
+           	(pass   (concatenate 'string "passed: " (write-to-string val)))
+           	(fail   (concatenate 'string "failed: " (write-to-string val)))
+           	(retval (cond 
+                     	((stringp expected) (string= val expected))
+	                   	(t (= val expected))))
            )
-     
-     (format t "~&~A"
-     (cond ((stringp expected) (if (string= val expected) pass fail))
-           (t (if (= val expected) pass fail)))
-     ))
-  ))
+     	(format t "~%~A  ~A"
+                  (if retval pass fail)
+                  expected
+                  )
+		retval
+     )
+  )
+
+

@@ -11,7 +11,7 @@
   (labels ((recur (n acc)
              (if (< n 2)
                (cons (rem n 2) acc)
-               (recur (div2 n) (cons (if (even? n) 0 1) acc)))))
+               (recur (div2 n) (cons (rem n 2) acc)))))
    (recur n nil) 
   )
   )

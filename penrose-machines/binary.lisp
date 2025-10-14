@@ -7,6 +7,9 @@
 (defun div2 (n)
   (floor n 2))
 
+(defun pow2 (n)
+  (expt 2 n))
+
 (defun int-to-bin (n)
   (labels ((recur (n acc)
              (if (< n 2)
@@ -23,4 +26,13 @@
                                   acc
                                   (write-to-string (first bs)))))))
    (recur bits "") 
+  ))
+
+
+(defun bin-to-int (bits)
+  (labels ((recur (bs pow acc)
+             (if (null bs)
+               acc
+               (recur (rest bs) (1+ pow) (+ (* (first bs) (pow2 pow)) acc)))))
+   (recur (reverse bits) 0 0)
   ))

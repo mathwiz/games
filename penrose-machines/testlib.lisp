@@ -6,7 +6,7 @@
            	(retval (cond 
                      	((stringp expected) (string= (write-to-string val) expected))
                      	((stringp val) (string= val (write-to-string expected)))
-	                   	(t (eq val expected))))
+	                   	(t (equal val expected))))
            )
      	(format t "~%~A  ~A"
                   (if retval pass fail)

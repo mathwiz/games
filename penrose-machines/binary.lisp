@@ -3,3 +3,6 @@
 
 (defun int-to-bin (n)
   nil)
+
+(defun bin-to-string (bits)
+  "10")

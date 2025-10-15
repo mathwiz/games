@@ -1,3 +1,8 @@
+(defparameter *machine-left* -1)
+(defparameter *machine-right* 1)
+(defparameter *machine-zero* 0)
+(defparameter *machine-one* 1)
+
 (defun make-machine (states)
   (let ((ht (make-hash-table)))
     (labels ((recur (i pairs)
@@ -15,11 +20,12 @@
 
 (defun make-action (to-state write move)
   (list
-    1
-    2
-    3)
+    to-state
+    write 
+    move
+    )
   )
 
 (defun make-state-pair (zero-action one-action)
-  (cons zero-action one-action)
+  (append zero-action one-action)
   )

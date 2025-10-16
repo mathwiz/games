@@ -1,6 +1,6 @@
 (defparameter *machine-left* -1)
 (defparameter *machine-right* 1)
-(defparameter *machine-stop* 2)
+(defparameter *machine-stop* nil)
 (defparameter *machine-zero* 0)
 (defparameter *machine-one* 1)
 
@@ -37,8 +37,19 @@
     (nth 3 state-pair))
   )
 
-(defun machine-step (machine tape position)
+(defun machine-step (machine tape pos)
   nil
   )
 
-(defun run-machine 
+(defun run-machine (machine tape limit)
+  (labels ((recur (pos step)
+             (let ((a 1)
+                   (b 2))
+               (if t
+                 1
+                 2)
+               )
+             )
+           )
+   (recur 0 0)
+  ))

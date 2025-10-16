@@ -45,9 +45,9 @@
   (labels ((recur (pos step)
              (let ((a 1)
                    (b 2))
-               (if t
-                 1
-                 2)
+               (cond ((> step limit) step)
+                     (t (recur (1+ pos) (1+ step)))
+                 )
                )
              )
            )

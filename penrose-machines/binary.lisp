@@ -7,6 +7,15 @@
 (defun pow2 (n)
   (expt 2 n))
 
+(defun ticks (n)
+  (labels ((recur (counter acc)
+             (if (< counter 1)
+               acc
+               (recur (1- counter) (cons 1 acc)))))
+   (recur n nil)
+  ))
+    
+
 (defun int-to-bin (n)
   (labels ((recur (n acc)
              (if (< n 2)
@@ -33,3 +42,23 @@
                (recur (rest bs) (1+ pow) (+ (* (first bs) (pow2 pow)) acc)))))
    (recur (reverse bits) 0 0)
   ))
+
+(defun contracted-to-expanded (ints)
+  (labels ((recur (xs acc)
+             (if (null xs)
+               acc
+               (recur (rest xs) (translate (first xs) acc)))
+             )
+           
+           (translate (digit existing)
+             (append 
+               (cond  ((eq digit 0) '(0))
+                      ((eq digit 1) '(1 0))
+                      ((eq digit 2) '(1 1 0))
+                      (t (reverse (cons 0 (ticks digit)))))
+               existing)
+           )
+           )
+   (recur (reverse ints) nil)
+  ))
+  

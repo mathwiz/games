@@ -1,5 +1,6 @@
 (defparameter *machine-left* -1)
 (defparameter *machine-right* 1)
+(defparameter *machine-stop* 2)
 (defparameter *machine-zero* 0)
 (defparameter *machine-one* 1)
 
@@ -29,3 +30,15 @@
 (defun make-state-pair (zero-action one-action)
   (append zero-action one-action)
   )
+
+(defun get-next-state (state-pair read-value)
+  (if (eq read-value *machine-zero*)
+    (first state-pair)
+    (nth 3 state-pair))
+  )
+
+(defun machine-step (machine tape position)
+  nil
+  )
+
+(defun run-machine 

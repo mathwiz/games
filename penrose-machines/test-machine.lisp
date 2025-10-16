@@ -3,6 +3,7 @@
 (load "machine.lisp")
 
 (defvar tape)
+(defvar state-pair)
 
 (setf tape
   (list 1 0 1 0 0 1 1 1 2)
@@ -29,7 +30,15 @@
   )
 
 
-(princ (contracted-to-expanded tape))
 (princ xn*2)
+
+(setf state-pair '(1 2 3 4 5 6))
+
+(check-expect (get-next-state state-pair 0) 1) 
+(check-expect (get-next-state state-pair 1) 4) 
+(check-expect (get-next-write state-pair 0) 2) 
+(check-expect (get-next-write state-pair 1) 5) 
+(check-expect (get-next-move state-pair 0) 3) 
+(check-expect (get-next-move state-pair 1) 6) 
 
 (check-expect '(run-machine xn*2 (contracted-to-expanded tape) 10) 11)

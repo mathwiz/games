@@ -31,6 +31,10 @@
   (append zero-action one-action)
   )
 
+(defun get-state-pair (machine state)
+  (gethash state machine)
+  )
+
 (defun get-next-state (state-pair read-value)
   (if (eq read-value *machine-zero*)
       (nth 0 state-pair)
@@ -49,8 +53,9 @@
       (nth 5 state-pair))
   )
 
-(defun machine-step (machine tape pos)
-  (let ((state 1)
+(defun machine-step (machine tape pos state)
+  (let ((state-pair 1)
+        (next 1)
         (write 1)
         (move 1))
     (cond 

@@ -34,11 +34,14 @@
 
 (setf state-pair '(1 2 3 4 5 6))
 
-(check-expect (get-next-state state-pair 0) 1) 
-(check-expect (get-next-state state-pair 1) 4) 
-(check-expect (get-next-write state-pair 0) 2) 
-(check-expect (get-next-write state-pair 1) 5) 
-(check-expect (get-next-move state-pair 0) 3) 
-(check-expect (get-next-move state-pair 1) 6) 
+(check-expect '(get-next-state state-pair 0) 1) 
+(check-expect '(get-next-state state-pair 1) 4) 
+(check-expect '(get-next-write state-pair 0) 2) 
+(check-expect '(get-next-write state-pair 1) 5) 
+(check-expect '(get-next-move state-pair 0) 3) 
+(check-expect '(get-next-move state-pair 1) 6) 
+
+(check-expect '(get-state-pair xn*2 3) '(0 1 0 nil nil nil))
+(check-expect '(get-state-pair xn*2 1) '(0 1 1 2 0 1))
 
 (check-expect '(run-machine xn*2 (contracted-to-expanded tape) 10) 11)

@@ -1,6 +1,6 @@
 (defparameter *machine-left* -1)
 (defparameter *machine-right* 1)
-(defparameter *machine-stop* nil)
+(defparameter *machine-stop* 0)
 (defparameter *machine-zero* 0)
 (defparameter *machine-one* 1)
 

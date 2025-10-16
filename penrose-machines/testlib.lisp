@@ -8,7 +8,7 @@
                      		(string= val expected))
 	                   	(t (equal val expected))))
            )
-     	(format t "~%~A  ~A"
+     	(format t "~%~A  ~S"
                   (if retval pass fail)
                   expected
                   )

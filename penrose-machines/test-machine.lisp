@@ -49,5 +49,6 @@
 (check-expect '(update-tape (contracted-to-expanded tape) 0 -1) '(-1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0))
 (check-expect '(update-tape (contracted-to-expanded tape) 1 -1) '(1 -1 0 1 0 0 0 1 0 1 0 1 0 1 1 0))
 (check-expect '(update-tape (contracted-to-expanded tape) 15 -1) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 -1))
+(check-expect '(update-tape (contracted-to-expanded tape) 16 -1) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0 0))
 
 ;(check-expect '(run-machine xn*2 (contracted-to-expanded tape) 16) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0))

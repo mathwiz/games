@@ -68,6 +68,7 @@
 
 (defun update-tape (tape pos new)
   (cond ((null tape) nil)
+    	((eq pos (length tape)) (append tape '(0)))
     	((eq pos 0) (cons new (rest tape)))
     	(t (cons (first tape) (update-tape (rest tape) (1- pos) new)))
     )

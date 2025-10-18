@@ -62,3 +62,22 @@
    (recur (reverse ints) nil)
   ))
   
+;TODO
+(defun expanded-to-contracted (bits)
+  (labels ((recur (xs acc)
+             (if (null xs)
+               acc
+               (recur (rest xs) (translate (first xs) acc)))
+             )
+           
+           (translate (digit existing)
+             (append 
+               (cond  ((eq digit 0) '(0))
+                      ((eq digit 1) '(1 0))
+                      ((eq digit 2) '(1 1 0))
+                      (t (reverse (cons 0 (ticks digit)))))
+               existing)
+           )
+           )
+   (recur bits nil)
+  ))

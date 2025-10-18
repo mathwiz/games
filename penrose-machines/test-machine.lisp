@@ -44,6 +44,6 @@
 (check-expect '(get-state-pair xn*2 3) '(0 1 0 nil nil nil))
 (check-expect '(get-state-pair xn*2 1) '(0 1 1 2 0 1))
 
-(check-expect '(machine-step xn*2 0 (contracted-to-expanded tape) 0) '(0 0 1))
+(check-expect '(machine-step xn*2 0 (read-tape (contracted-to-expanded tape) 0)) '(0 0 1))
 
 (check-expect '(run-machine xn*2 (contracted-to-expanded tape) 10) 11)

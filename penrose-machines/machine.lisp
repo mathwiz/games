@@ -53,9 +53,13 @@
       (nth 5 state-pair))
   )
 
-(defun machine-step (machine state tape pos)
+(defun read-tape (tape pos)
+  (nth pos tape)
+  )
+
+(defun machine-step (machine state read-value)
   (let ((state-pair (get-state-pair machine state))
-        (read-value (nth pos tape)))
+        )
     (list 
       (get-next-state state-pair read-value) 
       (get-next-write state-pair read-value) 
@@ -64,7 +68,7 @@
 
 (defun run-machine (machine tape limit)
   (labels ((recur (pos state step)
-            (let* ((next (machine-step machine state tape pos))
+            (let* ((next (machine-step machine state (read-tape tape pos)))
                   (state 1)
                   (write 1)
                   (move 1))

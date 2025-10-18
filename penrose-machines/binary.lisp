@@ -71,16 +71,7 @@
                      (right (rest xs)))
 	               (recur (rest xs) left right)
 	           )
-             )
-			)
-           
-           (translate (left right)
-               (cond  ((eq digit 0) '(0))
-                      ((eq digit 1) '(1 0))
-                      ((eq digit 2) '(1 1 0))
-                      (t (reverse (cons 0 (ticks digit)))))
-   	        )
-           )
+             )))
    (recur 
      (cond 
        ((null bits) nil)

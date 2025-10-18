@@ -22,4 +22,4 @@
   (list 1 0 0 0 1 0 1 1 0 1 0 1 0 1 1 0 1 0 0 0 1 1 1 0 1 0 1 0 1 1 1 1 0 0 1 1 0 ))
 (check-expect '(contracted-to-expanded contracted-tape) expanded-tape)
 
-(check-expect '(expanded-to-contracted expandeded-tape) contracted-tape)
+(check-expect '(expanded-to-contracted expanded-tape) contracted-tape)

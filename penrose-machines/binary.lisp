@@ -69,7 +69,7 @@
                acc
                (let ((left (first xs))
                      (right (rest xs)))
-	               (recur (rest xs) right)
+	               (recur (rest xs) left right)
 	           )
              )
 			)

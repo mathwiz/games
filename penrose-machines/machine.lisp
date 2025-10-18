@@ -96,4 +96,5 @@
     (print machine)
     (print tape)
     (recur 0 0 0 tape)
-    ))
+    )
+  )

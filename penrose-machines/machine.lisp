@@ -68,7 +68,7 @@
 
 (defun update-tape (tape pos new)
   (cond ((null tape) nil)
-    	((eq pos (length tape)) (append tape '(0)))
+    	((eq pos (length tape)) (append tape (list new)))
     	((eq pos 0) (cons new (rest tape)))
     	(t (cons (first tape) (update-tape (rest tape) (1- pos) new)))
     )
@@ -83,8 +83,7 @@
                   (move (nth 2 next))
                   )
               (progn     
-                (format t "~%read:~A state:~A write:~A move:~A" read-value state write move)
-                (print next)
+                (format t "~%step:~A read:~A state:~A write:~A move:~A" step read-value state write move)
                 (print new-tape)
               	(cond 
                       ((> step limit) new-tape)

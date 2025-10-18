@@ -64,12 +64,12 @@
   
 ;TODO
 (defun expanded-to-contracted (bits)
-  (labels ((recur (xs acc)
+  (labels ((recur (xs buf acc)
              (if (null xs)
                acc
                (let ((left (first xs))
                      (right (rest xs)))
-	               (recur (rest xs) (translate left right))
+	               (recur (rest xs) right)
 	           )
              )
 			)
@@ -79,7 +79,13 @@
                       ((eq digit 1) '(1 0))
                       ((eq digit 2) '(1 1 0))
                       (t (reverse (cons 0 (ticks digit)))))
+   	        )
            )
-           )
-   (recur bits nil)
+   (recur 
+     (cond 
+       ((null bits) nil)
+       ((eq (nth 0 bits) 0) bits)
+       (t (cons 0 bits)))
+     nil
+     nil)
   ))

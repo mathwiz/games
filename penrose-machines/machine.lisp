@@ -68,10 +68,11 @@
 
 (defun run-machine (machine tape limit)
   (labels ((recur (pos state step)
-            (let* ((next (machine-step machine state (read-tape tape pos)))
-                  (state 1)
-                  (write 1)
-                  (move 1))
+            (let* ((read-value (read-tape tape pos))
+                  (next (machine-step machine state read-value))
+                  (state (get-next-state next read-value))
+                  (write (get-next-write next read-value))
+                  (move (get-next-move next read-value)))
               (cond 
                 ((> step limit) step)
                 ((eq move *machine-stop*) step)

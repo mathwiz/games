@@ -83,7 +83,8 @@
                   (move (nth 2 next))
                   )
               (progn     
-                (format t "~%step:~A read:~A state:~A write:~A move:~A" step read-value state write move)
+                (format t "~%step:~A read:~A state:~A write:~A move:~A" 
+                  step read-value state write move)
                 (print new-tape)
               	(cond 
                       ((> step limit) new-tape)

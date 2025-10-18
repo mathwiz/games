@@ -15,7 +15,7 @@
     (list
       (make-state-pair
         (make-action 0 0 1)
-        (make-action 0 0 1))
+        (make-action 1 0 1))
       (make-state-pair
         (make-action 0 1 1)
         (make-action 2 0 1))
@@ -46,4 +46,4 @@
 
 (check-expect '(machine-step xn*2 0 (read-tape (contracted-to-expanded tape) 0)) '(0 0 1))
 
-(check-expect '(run-machine xn*2 (contracted-to-expanded tape) 10) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0))
+(check-expect '(run-machine xn*2 (contracted-to-expanded tape) 16) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0))

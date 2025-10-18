@@ -54,7 +54,7 @@
   )
 
 (defun read-tape (tape pos)
-  (nth pos tape)
+  (if (nth pos tape) (nth pos tape) 0)
   )
 
 (defun machine-step (machine state read-value)
@@ -75,13 +75,13 @@
                   (move (nth 2 next))
                   (dummy (setf (nth pos tape) write)))
               (progn     
-                (format t "~%read: ~A state:~A write:~A move:~A" read-value state write move)
+                (format t "~%read:~A state:~A write:~A move:~A" read-value state write move)
                 (print next)
                 (print tape)
               	(cond 
                       ((> step limit) tape)
                       ((eq move *machine-stop*) tape)
-                      (t (recur (1+ pos) state (1+ step)))
+                      (t (recur (+ pos move) state (1+ step)))
                       ))
               )
             ))

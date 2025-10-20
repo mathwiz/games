@@ -28,14 +28,16 @@
 (defun recur (xs buf acc)
   (cond ((null xs) 
          (reverse (cons (length buf) acc)))
-    	((eq (first xs) 1) 
-    	  (recur (rest xs) (cons 1 buf) acc))
 		((null (cddr xs))
 		  (recur nil nil 
 		    (cons 
 		      (if (eq (first xs) 0) (length buf) (first xs)) 
 		      acc)))
-	  	(t (recur (cddr xs) nil nil))
+    	((eq (first xs) 1) 
+    	  (recur (rest xs) (cons 1 buf) acc))
+    	((eq (first xs) 0)
+    	  (recur (rest xs) nil (cons (length buf) acc)))
+	  	(t (recur nil nil acc))
 	)
   )
 

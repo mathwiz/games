@@ -28,11 +28,6 @@
 (defun recur (xs buf acc)
   (cond ((null xs) 
          (reverse (cons (length buf) acc)))
-		((null (cddr xs))
-		  (recur nil nil 
-		    (cons 
-		      (if (eq (first xs) 0) (length buf) (first xs)) 
-		      acc)))
     	((eq (first xs) 1) 
     	  (recur (rest xs) (cons 1 buf) acc))
     	((eq (first xs) 0)
@@ -42,5 +37,5 @@
   )
 
 (print
-  (recur (expanded-to-contracted expanded-tape) nil nil)
+  (recur expanded-tape nil nil)
   )

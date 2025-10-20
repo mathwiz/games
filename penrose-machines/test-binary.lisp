@@ -22,20 +22,6 @@
   (list 1 0 0 0 1 0 1 1 0 1 0 1 0 1 1 0 1 0 0 0 1 1 1 0 1 0 1 0 1 1 1 1 0 0 1 1 0 ))
 (check-expect '(contracted-to-expanded contracted-tape) expanded-tape)
 
-(check-expect '(expanded-to-contracted nil) nil)
-(check-expect '(expanded-to-contracted expanded-tape) contracted-tape)
+(check-expect '(expanded-to-contracted nil) '(0))
+(check-expect '(expanded-to-contracted expanded-tape) (append (cons 0 contracted-tape) (list 0)))
 
-(defun recur (xs buf acc)
-  (cond ((null xs) 
-         (reverse (cons (length buf) acc)))
-    	((eq (first xs) 1) 
-    	  (recur (rest xs) (cons 1 buf) acc))
-    	((eq (first xs) 0)
-    	  (recur (rest xs) nil (cons (length buf) acc)))
-	  	(t (recur nil nil acc))
-	)
-  )
-
-(print
-  (recur expanded-tape nil nil)
-  )

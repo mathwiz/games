@@ -64,18 +64,16 @@
   
 ;TODO
 (defun expanded-to-contracted (bits)
-  (labels (
-           (recur (xs buf acc)
-                  (cond ((null xs) 
-                          (reverse (cons (length buf) acc)))
-                        ((eq (first xs) 1) 
-                          (recur (rest xs) (cons 1 buf) acc))
-                        ((eq (first xs) 0)
-                          (recur (rest xs) nil (cons (length buf) acc)))
-                        (t (recur nil nil acc))
-                        )
+  (labels ((recur (xs buf acc)
+            (cond ((null xs) 
+                    (reverse (cons (length buf) acc)))
+                  ((eq (first xs) 1) 
+                    (recur (rest xs) (cons 1 buf) acc))
+                  ((eq (first xs) 0)
+                    (recur (rest xs) nil (cons (length buf) acc)))
+                  (t (recur nil nil acc))
                   )
-           )
+            ))
    (recur 
      (cond 
        ((null bits) nil)

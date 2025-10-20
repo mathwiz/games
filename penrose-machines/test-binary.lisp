@@ -23,5 +23,5 @@
 (check-expect '(contracted-to-expanded contracted-tape) expanded-tape)
 
 (check-expect '(expanded-to-contracted nil) '(0))
-(check-expect '(expanded-to-contracted expanded-tape) (append (cons 0 contracted-tape) (list 0)))
+(check-expect '(expanded-to-contracted expanded-tape) (cons 0 contracted-tape))
 

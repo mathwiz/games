@@ -65,7 +65,9 @@
 ;TODO
 (defun expanded-to-contracted (bits)
   (labels ((recur (xs buf acc)
-            (cond ((null xs) 
+            (cond ((and (null xs) (eq (length buf) 0)) 
+                    (reverse acc))
+                  ((null xs)
                     (reverse (cons (length buf) acc)))
                   ((eq (first xs) 1) 
                     (recur (rest xs) (cons 1 buf) acc))

@@ -62,7 +62,7 @@
    (recur (reverse ints) nil)
   ))
   
-;TODO
+
 (defun expanded-to-contracted (bits)
   (labels ((recur (xs buf acc)
             (cond ((and (null xs) (eq (length buf) 0)) 

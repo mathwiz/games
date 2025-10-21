@@ -24,3 +24,8 @@ def dnastr(seq):
 
 def rnastr(seq):
   return ['UCAG'[i-1] for i in seq]
+
+
+def translate(codon):
+  table = { }
+  return table[codon]

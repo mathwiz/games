@@ -5,7 +5,7 @@ mean_age_first_child_A = 22
 mean_age_first_child_B = 27
 sd_age_first_child = 3
 age_span = 20 * sd_age_first_child
-prob_death = 10.4 / 1000
+
 
 class Person:
   def __init__(self, age):
@@ -14,7 +14,6 @@ class Person:
   def __str__(self):
     return f"I'm {self.age} years old!"
   
-print(Person(22))
 
 def initialize_population(size, mean_age, sd_age):
   return [ round(np.random.normal(mean_age, sd_age)) for it in range(size) ]

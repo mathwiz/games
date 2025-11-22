@@ -24,3 +24,8 @@
 
 (check-expect '(expanded-to-contracted nil) nil)
 (check-expect '(expanded-to-contracted expanded-tape) (cons 0 contracted-tape))
+
+(check-expect '(int-to-bin 167) (list 1 0 1 0 0 1 1 1))
+(check-expect '(int-to-bin 168) (list 1 0 1 0 1 0 0 0))
+(check-expect '(bin-to-string (int-to-bin 168)) "10101000")
+(check-expect '(contracted-to-expanded (int-to-bin 168)) (list 1 0 0 1 0 0 1 0 0 0 0))

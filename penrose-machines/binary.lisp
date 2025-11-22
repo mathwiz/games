@@ -112,3 +112,8 @@
      nil)
   ))
   
+
+(defun tape-to-bin (bits)
+  (expanded-to-contracted (padded-to-expanded bits))
+  )
+

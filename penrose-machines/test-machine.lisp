@@ -87,7 +87,7 @@
 
 (check-expect '(run-machine xn*2 (contracted-to-expanded tape) 21) 
   '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
-(check-expect '(bin-to-int (expanded-to-contracted (padded-to-expanded (run-machine xn*2 (contracted-to-expanded tape) 21))))
+(check-expect '(bin-to-int (tape-to-bin (run-machine xn*2 (contracted-to-expanded tape) 21)))
   334)
 
 

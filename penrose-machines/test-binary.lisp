@@ -37,8 +37,10 @@
 (check-expect '(expanded-to-padded (contracted-to-expanded (int-to-bin 334))) 
   '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
 
-(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))
+(check-expect '(padded-to-expanded 
+  '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))
   '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0))
 
-(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))
+(check-expect '(bin-to-int (expanded-to-contracted (padded-to-expanded 
+  '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))))
   334)

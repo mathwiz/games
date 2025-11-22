@@ -93,22 +93,21 @@
 
 (defun padded-to-expanded (bits)
   (labels ((recur (xs buf acc)
-            (cond ((and (null xs) (eq (length buf) 0)) 
-                    (reverse acc))
-                  ((null xs)
-                    (reverse (cons (length buf) acc)))
-                  ((eq (first xs) 1) 
+            (cond ((null xs)
+                    acc)
+                  ((and (eq (first xs) 1) (eq (length buf) 1)) 
+                    acc)
+                  ((eq (first xs) 1)
                     (recur (rest xs) (cons 1 buf) acc))
+                  ((and (eq (first xs) 0) (eq (length buf) 1)) 
+                    (recur (rest xs) nil (append (list 1 0) acc)))
                   ((eq (first xs) 0)
-                    (recur (rest xs) nil (cons (length buf) acc)))
+                    (recur (rest xs) nil (cons 0 acc)))
                   (t (recur nil nil acc))
                   )
             ))
    (recur 
-     (cond 
-       ((null bits) nil)
-       ((eq (nth 0 bits) 0) bits)
-       (t (cons 0 bits)))
+     bits
      nil
      nil)
   ))

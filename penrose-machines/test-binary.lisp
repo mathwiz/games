@@ -26,6 +26,8 @@
 (check-expect '(expanded-to-contracted expanded-tape) (cons 0 contracted-tape))
 
 (check-expect '(int-to-bin 167) (list 1 0 1 0 0 1 1 1))
+(check-expect '(bin-to-int (list 1 0 1 0 0 1 1 1)) 167)
+(check-expect '(bin-to-int (list 0 0 1 0 1 0 0 1 1 1)) 167)
 (check-expect '(int-to-bin 168) (list 1 0 1 0 1 0 0 0))
   
 (check-expect '(bin-to-string (int-to-bin 168)) "10101000")
@@ -35,5 +37,8 @@
 (check-expect '(expanded-to-padded (contracted-to-expanded (int-to-bin 334))) 
   '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
 
-(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
+(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))
+  '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0))
+
+(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 0 0))
   334)

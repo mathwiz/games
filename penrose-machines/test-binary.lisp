@@ -27,5 +27,13 @@
 
 (check-expect '(int-to-bin 167) (list 1 0 1 0 0 1 1 1))
 (check-expect '(int-to-bin 168) (list 1 0 1 0 1 0 0 0))
+  
 (check-expect '(bin-to-string (int-to-bin 168)) "10101000")
 (check-expect '(contracted-to-expanded (int-to-bin 168)) (list 1 0 0 1 0 0 1 0 0 0 0))
+(check-expect '(bin-to-int (expanded-to-contracted (list 1 0 0 1 0 0 1 0 0 0 0))) 168)
+
+(check-expect '(expanded-to-padded (contracted-to-expanded (int-to-bin 334))) 
+  '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
+
+(check-expect '(padded-to-expanded '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
+  334)

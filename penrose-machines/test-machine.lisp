@@ -35,8 +35,36 @@
     )
   )
 
-
 (princ xn*2)
+
+
+(setf xn+1 
+  (make-machine
+    (list
+      (make-state-pair
+        (make-action 0 0 1)
+        (make-action 1 0 1))
+      (make-state-pair
+        (make-action 0 1 1)
+        (make-action 2 0 1))
+      (make-state-pair
+        (make-action 3 1 1)
+        (make-action nil nil nil))
+      (make-state-pair
+        (make-action 4 1 1)
+        (make-action nil nil nil))
+      (make-state-pair
+        (make-action 5 0 1)
+        (make-action nil nil nil))
+      (make-state-pair
+        (make-action 0 1 *machine-stop*)
+        (make-action nil nil nil))
+      )
+    )
+  )
+
+(princ xn+1)
+
 
 (setf state-pair '(1 2 3 4 5 6))
 
@@ -58,3 +86,8 @@
 (check-expect '(update-tape (contracted-to-expanded tape) 16 -1) '(1 0 0 1 0 0 0 1 0 1 0 1 0 1 1 0 0))
 
 (check-expect '(run-machine xn*2 (contracted-to-expanded tape) 21) '(0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0))
+
+
+
+
+

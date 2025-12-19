@@ -14,11 +14,29 @@
 
 (defun main-loop ()
   (progn
-    (format t "~%([Qq] = Quit)> ")
+    (format t "~%(h = Help)> ")
     (let ((cmd (read-line)))
-      (cond ((equal cmd "q")
-             (progn (format t "Bye.")
-                    nil))
-            (t 
-             (progn (main-loop)))))
+      (cond ((equal cmd "h") (help))
+            ((equal cmd "q") (end-program))
+            (t (unknown cmd))))
 ))
+
+(defun end-program ()
+  (progn 
+    (format t "Bye.")
+    nil)
+)
+
+(defun help ()
+  (progn 
+    
+    (format t "~%")
+    (format t "h - This list.")
+    (main-loop))
+)
+
+(defun unknown (cmd)
+  (progn 
+    (format t "Unknown command: ~S" cmd)
+    (main-loop))
+)

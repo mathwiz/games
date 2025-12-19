@@ -29,9 +29,15 @@
 
 (defun help ()
   (progn 
-    
-    (format t "~%")
-    (format t "h - This list.")
+    (let ((commands 
+           (list
+            (cons "h" "This list.")
+            (cons "f" "bar")
+            (cons "q" "Quit.")                     
+            )))
+      (dolist (x commands nil)
+        (format t "~S - ~S~%" (car x) (cdr x))
+        ))
     (main-loop))
 )
 

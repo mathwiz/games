@@ -35,8 +35,15 @@
     (format t "Source file: ")
     (setf _SOURCE (read))
     (load _SOURCE)
-    (register-program _MEMORY)
+    (run-register-program (register-program) _MEMORY)
 ))
+
+
+(defun run-register-program (program registers)
+  (let ((a 1)
+        (b 2))
+    (princ registers))
+)
 
 
 (defun show ()

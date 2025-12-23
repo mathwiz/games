@@ -1,2 +1,2 @@
-(defun register-program (memory)
-  (princ memory))
+(defun register-program ()
+  (princ 'register-program))

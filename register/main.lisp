@@ -1,7 +1,7 @@
 
 (defun main ()
-  (let ((a 1)
-        (b 2))
+  (let ((_REGISTERS 8)
+        (_MEMORY nil))
     (progn
       (init)
       (main-loop))))
@@ -10,7 +10,9 @@
   (progn
     (let ((a 1)
           (b 2))
-      nil)))
+      (progn
+        (setf _MEMORY (make-hash-table))
+))))
 
 (defun main-loop ()
   (progn

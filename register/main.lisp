@@ -6,36 +6,38 @@
       (init)
       (main-loop))))
 
-(defun init ()
-  (progn
-    (let ((a 1)
-          (b 2))
-      (progn
-        (setf _MEMORY (make-hash-table))
-))))
+(defun init () 
+(progn 
+  (setf _MEMORY (make-hash-table))
+))
 
 (defun main-loop ()
   (progn
     (format t "~%(h = Help)> ")
     (let ((cmd (read-line)))
       (cond ((equal cmd "h") (help))
+            ((equal cmd "s") (show _MEMORY))
             ((equal cmd "q") (end-program))
             (t (unknown cmd))))
 ))
 
+(defun show (registers)
+  (progn
+    (princ registers)))
+
 (defun end-program ()
-  (progn 
+  (progn
     (format t "Bye.")
     nil)
 )
 
 (defun help ()
-  (progn 
-    (let ((commands 
+  (progn
+    (let ((commands
            (list
             (cons "h" "This list.")
-            (cons "f" "bar")
-            (cons "q" "Quit.")                     
+            (cons "s" "Show")
+            (cons "q" "Quit.")
             )))
       (dolist (x commands nil)
         (format t "~S - ~S~%" (car x) (cdr x))
@@ -44,7 +46,7 @@
 )
 
 (defun unknown (cmd)
-  (progn 
+  (progn
     (format t "Unknown command: ~S" cmd)
     (main-loop))
 )

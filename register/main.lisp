@@ -1,52 +1,73 @@
 
 (defun main ()
-  (let ((_REGISTERS 8)
+  (let ((_REGISTERS nil)
         (_MEMORY nil))
     (progn
-      (init)
       (main-loop))))
 
-(defun init () 
-(progn 
-  (setf _MEMORY (make-hash-table))
-))
 
 (defun main-loop ()
   (progn
     (format t "~%(h = Help)> ")
     (let ((cmd (read-line)))
       (cond ((equal cmd "h") (help))
-            ((equal cmd "s") (show _MEMORY))
-            ((equal cmd "q") (end-program))
+            ((equal cmd "i") (init))
+            ((equal cmd "r") (run))
+            ((equal cmd "s") (show))
+            ((equal cmd "q") (progn (end-program) (return-from main-loop nil)))
             (t (unknown cmd))))
+    (main-loop)
 ))
 
-(defun show (registers)
+
+(defun init () 
+  (progn 
+    (format t "Size of memory: ")
+    (setf _REGISTERS (read))
+    (setf _MEMORY (make-array _REGISTERS))
+))
+
+
+(defun run () 
+  (progn 
+    (format t "Source file: ")
+    (setf _SOURCE (read))
+    (load _SOURCE)
+    (register-program _MEMORY)
+))
+
+
+(defun show ()
   (progn
-    (princ registers)))
+    (princ _MEMORY)
+))
+
 
 (defun end-program ()
   (progn
     (format t "Bye.")
-    nil)
-)
+    nil
+))
+
 
 (defun help ()
   (progn
     (let ((commands
            (list
             (cons "h" "This list.")
-            (cons "s" "Show")
+            (cons "i" "Initialize.")
+            (cons "s" "Show.")
             (cons "q" "Quit.")
             )))
       (dolist (x commands nil)
         (format t "~S - ~S~%" (car x) (cdr x))
         ))
-    (main-loop))
-)
+))
+
 
 (defun unknown (cmd)
   (progn
     (format t "Unknown command: ~S" cmd)
-    (main-loop))
-)
+    nil
+))
+

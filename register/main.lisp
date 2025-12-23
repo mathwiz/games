@@ -14,7 +14,9 @@
             ((equal cmd "i") (init))
             ((equal cmd "r") (run))
             ((equal cmd "s") (show))
-            ((equal cmd "q") (progn (end-program) (return-from main-loop nil)))
+            ((equal cmd "q") (progn 
+                               (end-program) 
+                               (return-from main-loop nil)))
             (t (unknown cmd))))
     (main-loop)
 ))

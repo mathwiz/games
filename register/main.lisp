@@ -12,6 +12,7 @@
     (let ((cmd (read-line)))
       (cond ((equal cmd "h") (help))
             ((equal cmd "i") (init))
+            ((equal cmd "l") (load-program))
             ((equal cmd "r") (run))
             ((equal cmd "s") (show))
             ((equal cmd "q") (progn 
@@ -19,6 +20,23 @@
                                (return-from main-loop nil)))
             (t (unknown cmd))))
     (main-loop)
+))
+
+
+(defun help ()
+  (progn
+    (let ((commands
+           (list
+            (cons "h" "This list.")
+            (cons "i" "Initialize registers.")
+            (cons "l" "Load program.")
+            (cons "r" "Run program.")
+            (cons "s" "Show registers.")
+            (cons "q" "Quit.")
+            )))
+      (dolist (x commands nil)
+        (format t "~S - ~S~%" (car x) (cdr x))
+        ))
 ))
 
 
@@ -30,11 +48,16 @@
 ))
 
 
-(defun run () 
+(defun load-program () 
   (progn 
     (format t "Source file: ")
     (setf _SOURCE (read))
     (load _SOURCE)
+))
+
+
+(defun run () 
+  (progn 
     (run-register-program (register-program) _MEMORY)
 ))
 
@@ -42,7 +65,7 @@
 (defun run-register-program (program registers)
   (let ((a 1)
         (b 2))
-    (princ registers))
+    (princ (register-program)))
 )
 
 
@@ -56,21 +79,6 @@
   (progn
     (format t "Bye.")
     nil
-))
-
-
-(defun help ()
-  (progn
-    (let ((commands
-           (list
-            (cons "h" "This list.")
-            (cons "i" "Initialize.")
-            (cons "s" "Show.")
-            (cons "q" "Quit.")
-            )))
-      (dolist (x commands nil)
-        (format t "~S - ~S~%" (car x) (cdr x))
-        ))
 ))
 
 

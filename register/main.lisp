@@ -1,3 +1,4 @@
+(load "get-file.lisp")
 
 (defun main ()
   (let ((_REGISTERS nil)
@@ -55,6 +56,11 @@
     (setf _SOURCE (read))
     (load _SOURCE)
 ))
+
+
+(defun extract-program (lines)
+  (mapcar #'READ-FROM-STRING lines)
+)
 
 
 (defun run () 

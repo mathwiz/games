@@ -1,7 +1,8 @@
 
 (defun main ()
   (let ((_REGISTERS nil)
-        (_MEMORY nil))
+        (_MEMORY nil)
+        (_PROGRAM nil))
     (progn
       (main-loop))))
 
@@ -58,14 +59,14 @@
 
 (defun run () 
   (progn 
-    (run-register-program (register-program) _MEMORY)
+    (run-register-program _PROGRAM _MEMORY)
 ))
 
 
 (defun run-register-program (program registers)
   (let ((a 1)
         (b 2))
-    (princ (register-program)))
+    (princ program))
 )
 
 

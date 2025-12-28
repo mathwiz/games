@@ -14,6 +14,7 @@
     (let ((cmd (read-line)))
       (cond ((equal cmd "h") (help))
             ((equal cmd "i") (init))
+            ((equal cmd "j") (set-register))
             ((equal cmd "l") (load-program))
             ((equal cmd "p") (list-program))
             ((equal cmd "r") (run))
@@ -51,6 +52,18 @@
     (setf _REGISTERS (read))
     (setf _MEMORY (make-array _REGISTERS))
 ))
+
+
+(defun set-register ()
+  (let ((index nil)
+        (value nil))
+    (progn
+      (format t "Register: ")
+      (setf index (read))
+      (format t "value: ")
+      (setf value (read))
+      (setf (aref _MEMORY (1- index)) value)
+)))
 
 
 (defun load-program () 

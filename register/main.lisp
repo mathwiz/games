@@ -32,6 +32,7 @@
            (list
             (cons "h" "This list.")
             (cons "i" "Initialize registers.")
+            (cons "j" "Set register.")
             (cons "l" "Load program.")
             (cons "p" "List program.")
             (cons "r" "Run program.")
@@ -84,8 +85,14 @@
   (loop for x in _PROGRAM
     do (progn
          (format t "~S~%" x)
-         ;do command x
+         (execute-command x registers)
          )
+))
+
+
+(defun execute-command (cmd registers)
+  (progn
+    (princ cmd)
 ))
 
 

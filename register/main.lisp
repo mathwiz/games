@@ -62,8 +62,13 @@
       (setf index (read))
       (format t "value: ")
       (setf value (read))
-      (setf (aref _MEMORY (1- index)) value)
+      (update-register _MEMORY index value)
 )))
+
+
+(defun update-register (registers index value)
+  (setf (aref _MEMORY (1- index)) value)
+)
 
 
 (defun load-program () 
@@ -109,20 +114,22 @@
   (let ((cmd (first line)))
     (cond ((equal cmd 1) (inc line registers))
           ((equal cmd 2) (deb line registers))
-          (t (end)))
+          (t (end-cmd)))
 ))
 
 
 (defun inc (line registers)
-  1
+  (let ((next (second line)))
+    (progn
+      ()))
 )
 
 (defun deb (line registers)
   1
 )
 
-(defun end ()
-  -1
+(defun end-cmd ()
+  nil
 )
 
 

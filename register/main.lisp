@@ -140,13 +140,18 @@
       nil))
 )
 
+
 (defun deb (line registers)
   (let* ((index (second line))
          (branch (third line))
          (current (peek-register registers index)))
-    (progn
-      (princ current)))
-)
+    (if (eq current 0) 
+        branch
+        (progn
+          (decrement-register registers index)
+          nil))
+))
+
 
 (defun end-cmd ()
   -1

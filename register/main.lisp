@@ -71,6 +71,21 @@
 )
 
 
+(defun peek-register (registers index)
+  (aref _MEMORY (1- index))
+)
+
+
+(defun increment-register (registers index)
+  (incf (aref _MEMORY (1- index)) 1)
+)
+
+
+(defun decrement-register (registers index)
+  (decf (aref _MEMORY (1- index)) 1)
+)
+
+
 (defun load-program () 
   (progn 
     (format t "Source file: ")
@@ -119,17 +134,18 @@
 
 
 (defun inc (line registers)
-  (let ((next (second line)))
-    (progn
-      ()))
+  (let ((index (second line)))
+    (increment-register registers index))
 )
 
 (defun deb (line registers)
-  1
+  (let ((index (second line))
+        (branch (third line)))
+    (increment-register registers index))
 )
 
 (defun end-cmd ()
-  nil
+  -1
 )
 
 

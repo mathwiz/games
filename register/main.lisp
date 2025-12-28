@@ -90,10 +90,21 @@
 ))
 
 
-(defun execute-command (cmd registers)
-  (progn
+(defun execute-command (line registers)
+  (let ((cmd (car line))
+        (b 2))
     (princ cmd)
 ))
+
+
+(defun dispatch-command (cmd)
+  nil
+)
+
+
+(defun incr (reg)
+  nil
+)
 
 
 (defun show ()

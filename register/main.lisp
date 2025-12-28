@@ -135,13 +135,17 @@
 
 (defun inc (line registers)
   (let ((index (second line)))
-    (increment-register registers index))
+    (progn 
+      (increment-register registers index)
+      nil))
 )
 
 (defun deb (line registers)
-  (let ((index (second line))
-        (branch (third line)))
-    (increment-register registers index))
+  (let* ((index (second line))
+         (branch (third line))
+         (current (peek-register registers index)))
+    (progn
+      (princ current)))
 )
 
 (defun end-cmd ()

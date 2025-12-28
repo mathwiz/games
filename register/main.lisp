@@ -95,6 +95,8 @@
 
 
 (defun run-register-program (program registers)
+  (labels ((recur (line)
+             nil)))
   (loop for x in _PROGRAM
     do (progn
          (format t "~S~%" x)
@@ -104,19 +106,23 @@
 
 
 (defun execute-command (line registers)
-  (let ((cmd (car line))
-        (b 2))
-    (princ cmd)
+  (let ((cmd (first line)))
+    (cond ((equal cmd 1) (inc line registers))
+          ((equal cmd 2) (deb line registers))
+          (t (end)))
 ))
 
 
-(defun dispatch-command (cmd)
-  nil
+(defun inc (line registers)
+  1
 )
 
+(defun deb (line registers)
+  1
+)
 
-(defun incr (reg)
-  nil
+(defun end ()
+  -1
 )
 
 

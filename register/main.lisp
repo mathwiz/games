@@ -15,6 +15,7 @@
       (cond ((equal cmd "h") (help))
             ((equal cmd "i") (init))
             ((equal cmd "l") (load-program))
+            ((equal cmd "p") (list-program))
             ((equal cmd "r") (run))
             ((equal cmd "s") (show))
             ((equal cmd "q") (progn 
@@ -32,6 +33,7 @@
             (cons "h" "This list.")
             (cons "i" "Initialize registers.")
             (cons "l" "Load program.")
+            (cons "p" "List program.")
             (cons "r" "Run program.")
             (cons "s" "Show registers.")
             (cons "q" "Quit.")
@@ -54,7 +56,16 @@
   (progn 
     (format t "Source file: ")
     (setf _SOURCE (read))
-    (load _SOURCE)
+    ;(load _SOURCE)
+    (setf _PROGRAM (extract-program (get-file _SOURCE)))
+))
+
+
+(defun list-program () 
+  (loop for x in _PROGRAM
+    do (progn
+         (format t "~S~%" x)
+         )
 ))
 
 
@@ -70,10 +81,12 @@
 
 
 (defun run-register-program (program registers)
-  (let ((a 1)
-        (b 2))
-    (princ program))
-)
+  (loop for x in _PROGRAM
+    do (progn
+         (format t "~S~%" x)
+         ;do command x
+         )
+))
 
 
 (defun show ()

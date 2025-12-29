@@ -115,13 +115,16 @@
 
 
 (defun run-register-program (program registers)
-  (labels ((recur (line)
-             nil)))
-  (loop for x in _PROGRAM
-    do (progn
-         (format t "~S~%" x)
-         (execute-command x registers)
-         )
+  (labels ((recur (counter)
+             (let* ((line (nth (1- counter) program))
+                    (retval (execute-command line registers)))
+                 (progn
+                   (format t "~S~%" line)
+                   (cond ((null retval) (recur (1+ counter)))
+                         ((eq retval -1) counter)
+                         (t (recur retval)))))
+             ))
+    (recur 1)
 ))
 
 
@@ -129,7 +132,7 @@
   (let ((cmd (first line)))
     (cond ((equal cmd 1) (inc line registers))
           ((equal cmd 2) (deb line registers))
-          (t (end-cmd)))
+          (t (halt)))
 ))
 
 
@@ -153,7 +156,7 @@
 ))
 
 
-(defun end-cmd ()
+(defun halt ()
   -1
 )
 

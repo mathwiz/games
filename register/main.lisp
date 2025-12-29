@@ -120,8 +120,7 @@
                     (retval (execute-command line registers)))
                  (progn
                    (format t "~S~%" line)
-                   (cond ((null retval) (recur (1+ counter)))
-                         ((eq retval -1) counter)
+                   (cond ((eq retval -1) counter)
                          (t (recur retval)))))
              ))
     (recur 1)
@@ -137,10 +136,11 @@
 
 
 (defun inc (line registers)
-  (let ((index (second line)))
+  (let ((index (second line))
+        (next (third line)))
     (progn 
       (increment-register registers index)
-      nil))
+      next))
 )
 
 

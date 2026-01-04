@@ -120,6 +120,8 @@
                     (retval (execute-command line registers)))
                  (progn
                    (format t "~S~%" line)
+                   (show)
+                   (format t "~%")
                    (cond ((eq retval (halt)) counter)
                          (t (recur retval)))))
              ))

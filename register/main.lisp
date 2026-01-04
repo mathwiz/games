@@ -51,6 +51,9 @@
     (format t "Size of memory: ")
     (setf _REGISTERS (read))
     (setf _MEMORY (make-array _REGISTERS))
+    (loop for x from 1 to _REGISTERS
+          do (update-register _MEMORY x 0)
+          )
 ))
 
 
@@ -121,7 +124,6 @@
                  (progn
                    (format t "~S~%" line)
                    (show)
-                   (format t "~%")
                    (cond ((eq retval (halt)) counter)
                          (t (recur retval)))))
              ))
@@ -167,6 +169,7 @@
 (defun show ()
   (progn
     (princ _MEMORY)
+    (format t "~%")
 ))
 
 
